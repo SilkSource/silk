@@ -1,0 +1,34 @@
+Smooth coding:
+  Programmer:
+  - Focus on feature
+    - Remember feature as context
+    - Focus on feature-specific code rather than boilerplate code
+      - Auto-complete code
+        - Create missing class under test
+        - Create missing method under test
+        - Create missing method used in implementation (programming by intent)
+        - Create missing local variable
+      - Auto-configure frameworks and tools
+        - Configure build system
+        - Configure BDD framework
+  - Meet Definition of Done
+    - Meet functional requirements
+      - Show failing tests
+      - Automatically re-run tests when code changes
+      - Auto-implement failing test (GP and TPP)
+    - Meet code coverage requirements
+      - Show uncovered code
+      - Show code coverage %
+    - Meet clean code requirements
+      - Show method complexity
+      - Suggest refactorings that reduce complexity
+  Product Owner:
+  - Improve domain understanding
+    - Define glossary
+  - Improve requirements understanding
+    - Define goals, capabilities and features
+    - Schedule features as user stories
+  Tester:
+  - Improve requirements understanding
+    - Define executable specifications
+      - Warn when not using terms defined in glossary
