@@ -4,10 +4,10 @@ Smooth coding:
     - Remember feature as context
     - Focus on feature-specific code rather than boilerplate code
       - Auto-complete code
-        - Create missing class under test
-        - Create missing method under test
-        - Create missing method used in implementation (programming by intent)
-        - Create missing local variable
+        - Auto-create missing class under test
+        - Auto-create missing method under test
+        - Auto-create missing method used in implementation (program by intent)
+        - Auto-create missing local variable
       - Auto-configure frameworks and tools
         - Configure build system
         - Configure BDD framework
@@ -25,10 +25,16 @@ Smooth coding:
   Product Owner:
   - Improve domain understanding
     - Define glossary
+      - Auto-sort terms
+      - Warn on cyclic dependencies of terms
   - Improve requirements understanding
     - Define goals, capabilities and features
     - Schedule features as user stories
   Tester:
   - Improve requirements understanding
     - Define executable specifications
+      - Warn on missing specification matching feature
+      - Keep feature and specification names in sync
       - Warn when not using terms defined in glossary
+      - Add used term to glossary
+      - Auto-generate step definitions
