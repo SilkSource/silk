@@ -1,14 +1,17 @@
+buildscript {
+	repositories {
+	  jcenter()
+	}
+  dependencies {
+    classpath 'org.yaml:snakeyaml:1.15'
+  }
+}
+
+import org.yaml.snakeyaml.Yaml
+
 plugins {
  id 'java'
  id 'eclipse'
-}
-
-repositories {
-  jcenter()
-}
-
-dependencies {
-  testCompile 'junit:junit:4.12'
 }
 
 defaultTasks 'build'
@@ -16,3 +19,26 @@ defaultTasks 'build'
 task wrapper(type: Wrapper) {
   gradleVersion = '2.11'
 }
+
+task checkGlossary << {
+  validateYaml fileTree(dir: 'src/main/glossary')  
+}
+
+def validateYaml(files) {
+  def yaml = new Yaml()
+  files.include '**/*.yml'
+  files.each { file ->
+    file.withInputStream { stream ->
+      def map = yaml.load(stream)
+      if (!(map instanceof Map)) {
+        throw new GradleException("Invalid YAML file: $file.path")
+      }
+    }
+  }
+}
+
+task checkGoals << {
+  validateYaml fileTree(dir: 'src/main/goals')  
+}
+
+check.dependsOn 'checkGlossary', 'checkGoals'
