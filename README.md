@@ -1,2 +1,3 @@
 # silk-java
-Smooth software development for Java
+
+[Smooth software development](http://smoothsoftwaredev.wordpress.com) for Java.
