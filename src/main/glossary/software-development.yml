@@ -4,10 +4,11 @@ Glossary:
   - virtual-file-system.yml
   Defines:
     Acceptance criteria: Conditions that, when met, unequivocally define success; usually expressed in terms of secondary artifacts
-    Build: Series of generators where the output of one is used as input for the next
-    Build description: Source code that defines what generators make up a build and how they are connected
     Artifact: Something that is derived from source code and/or other artifacts
     Branch: Complete copy of all the source code
+    Build: Series of generators where the output of one is used as input for the next
+    Build description: Source code that defines what generators make up a build and how they are connected
+    Class: Implementation type defined in source code
     Dependency: Artifact produced by another project
     Dependency description: Source code that defines what dependencies a dependency manager should pull into a project
     Dependency manager: Something that pulls required dependencies into a project
@@ -21,4 +22,5 @@ Glossary:
     Promote: Move primary artifacts from one environment to the next when acceptance criteria are met
     Secondary artifact: Artifact that provides feedback about a transformation performed by a generator, like compiler errors
     Source code: A file produced by a project member, like a Java class or a user story
+    Test: Source code that defines expected behavior of production source code
     Version: Contents of a source code file at a particular point in time, along with meta-data about the changes compared to the previous version, if any 

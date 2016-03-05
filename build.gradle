@@ -20,6 +20,14 @@ task wrapper(type: Wrapper) {
   gradleVersion = '2.11'
 }
 
+repositories {
+  jcenter()
+}
+dependencies {
+  testCompile 'net.serenity-bdd:serenity-jbehave:1.6.0',
+      'net.serenity-bdd:serenity-core:1.1.28'
+}
+
 task checkGlossary << {
   validateYaml fileTree(dir: 'src/main/glossary')  
 }
