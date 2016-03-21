@@ -2,6 +2,6 @@ Glossary:
   Defines:
     Directory: Node that contains other nodes
     File: Node that contains a sequence of bytes
-    Node: Named storage item; either a file or a directory
+    File system: Storage place identified by a root directory
+    Node: Named item in a file system that is contained in a directory; either a file or a directory
     Root directory: A directory that is not contained in another directory
-    Virtual file system: Root directory with all its nested nodes; need not be implemented as a physical file system

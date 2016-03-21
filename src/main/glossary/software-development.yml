@@ -5,22 +5,28 @@ Glossary:
   Defines:
     Acceptance criteria: Conditions that, when met, unequivocally define success; usually expressed in terms of secondary artifacts
     Artifact: Something that is derived from source code and/or other artifacts
-    Branch: Complete copy of all the source code
+    Branch: Complete copy of all the source code in a source code control system, including production code and test code
     Build: Series of generators where the output of one is used as input for the next
     Build description: Source code that defines what generators make up a build and how they are connected
-    Class: Implementation type defined in source code
+    Class: Source code that defines an implementation type
+    Class under test: Class that is tested by a test class
     Dependency: Artifact produced by another project
     Dependency description: Source code that defines what dependencies a dependency manager should pull into a project
     Dependency manager: Something that pulls required dependencies into a project
-    Environment: The surroundings in which a build executes, including an VM or OS, a virtual file system storing a branch, and acceptance criteria
+    Environment: The surroundings in which a build executes, including an VM or OS, a branch, and acceptance criteria
     Environment description: Source code that defines an environment
     Generator: Artifact that transforms source code and/or artifacts into new artifacts
     Merge: Combine changes in multiple branches
     Pipeline: Sequence of environments that artifacts are promoted through
     Pipeline description: Source code that describes a pipeline
     Primary artifact: Artifact of direct interest, like a compiled class file
+    Product: Project where the goal is to deliver software via a pipeline
+    Production code: Source set that is transformed to one or more artifacts that move to a downstream environment
     Promote: Move primary artifacts from one environment to the next when acceptance criteria are met
     Secondary artifact: Artifact that provides feedback about a transformation performed by a generator, like compiler errors
-    Source code: A file produced by a project member, like a Java class or a user story
-    Test: Source code that defines expected behavior of production source code
+    Source code: A file produced by one or more project members; examples are Java classes and user stories
+    Source code control system: System that stores product branches in a file system
+    Source set: Collection of source codes
+    Test class: Class that defines expected behavior for a class under test
+    Test code: Source set that is transformed to secondary artifacts that describe how well production code meets expectations
     Version: Contents of a source code file at a particular point in time, along with meta-data about the changes compared to the previous version, if any 

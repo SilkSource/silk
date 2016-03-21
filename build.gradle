@@ -50,3 +50,13 @@ task checkGoals << {
 }
 
 check.dependsOn 'checkGlossary', 'checkGoals'
+
+task cleanUpAfterTest(type: Delete) {
+  delete file('target')
+}
+
+test {
+  finalizedBy cleanUpAfterTest
+  systemProperty 'serenity.outputDirectory', new File(buildDir, 'jbehave').path
+  
+}
