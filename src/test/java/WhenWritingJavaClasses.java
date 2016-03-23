@@ -1,11 +1,13 @@
-package com.github.silksource.java;
+
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.github.silksource.java.JavaClass;
 
-public class JavaClassTest {
+
+public class WhenWritingJavaClasses {
 
   private final JavaClass type = new JavaClass("foo.bar.Baz");
   private final String methodName = "gnu";
@@ -13,7 +15,7 @@ public class JavaClassTest {
   private final String statement = "return;";
 
   @Test
-  public void addsMethodWithStatement() throws Exception {
+  public void shouldAddMethodWithStatement() throws Exception {
     type.addMethod(methodName, returnType)
         .addStatement(statement);
 
@@ -26,7 +28,7 @@ public class JavaClassTest {
   }
 
   @Test
-  public void replacesMethodWithStatement() throws Exception {
+  public void shouldReplaceStatementInMethod() throws Exception {
     String newStatement = "System.out.println();";
     type.addMethod(methodName, returnType)
         .addStatement(statement);
