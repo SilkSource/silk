@@ -14,10 +14,12 @@ plugins {
  id 'eclipse'
 }
 
+eclipse.classpath.defaultOutputDir = file('classes')
+
 defaultTasks 'build'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.11'
+  gradleVersion = '2.12'
 }
 
 repositories {
@@ -58,5 +60,4 @@ task cleanUpAfterTest(type: Delete) {
 test {
   finalizedBy cleanUpAfterTest
   systemProperty 'serenity.outputDirectory', new File(buildDir, 'jbehave').path
-  
 }
