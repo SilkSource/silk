@@ -1,6 +1,6 @@
-package com.remonsinnema.silk.test;
+package io.silksource.silk.test;
 
-import static com.remonsinnema.silk.unittest.FqnBuilder.someFqn;
+import static io.silksource.silk.unittest.FqnBuilder.someFqn;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;

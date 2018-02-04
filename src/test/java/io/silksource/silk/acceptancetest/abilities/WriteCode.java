@@ -1,4 +1,4 @@
-package com.remonsinnema.silk.acceptancetest.abilities;
+package io.silksource.silk.acceptancetest.abilities;
 
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.core.Silk;

@@ -1,9 +1,8 @@
-package com.remonsinnema.silk.code.inmemory;
-
-import com.remonsinnema.silk.code.heal.WhenManipulatingCode;
+package io.silksource.silk.code.inmemory;
 
 import io.silksource.silk.code.api.Events;
 import io.silksource.silk.code.api.Project;
+import io.silksource.silk.code.heal.WhenManipulatingCode;
 import io.silksource.silk.code.inmemory.InMemoryProject;
 
 

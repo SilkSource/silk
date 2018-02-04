@@ -1,6 +1,6 @@
-package com.remonsinnema.silk.unittest;
+package io.silksource.silk.unittest;
 
-import static com.remonsinnema.silk.unittest.IdentifierBuilder.someIdentifier;
+import static io.silksource.silk.unittest.IdentifierBuilder.someIdentifier;
 
 import java.util.Random;
 

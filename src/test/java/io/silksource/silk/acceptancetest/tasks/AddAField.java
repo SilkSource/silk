@@ -1,7 +1,6 @@
-package com.remonsinnema.silk.acceptancetest.tasks;
+package io.silksource.silk.acceptancetest.tasks;
 
-import com.remonsinnema.silk.acceptancetest.abilities.WriteCode;
-
+import io.silksource.silk.acceptancetest.abilities.WriteCode;
 import io.silksource.silk.code.api.FullyQualifiedName;
 import io.silksource.silk.code.api.SourceSets;
 import net.serenitybdd.core.steps.Instrumented;

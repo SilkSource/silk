@@ -1,4 +1,4 @@
-package com.remonsinnema.silk.code.heal.syntax;
+package io.silksource.silk.code.heal.syntax;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
@@ -11,11 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.remonsinnema.silk.acceptancetest.abilities.WriteCode;
-import com.remonsinnema.silk.acceptancetest.questions.TheMain;
-import com.remonsinnema.silk.acceptancetest.tasks.AddAField;
-import com.remonsinnema.silk.acceptancetest.tasks.CreateATest;
-
+import io.silksource.silk.acceptancetest.abilities.WriteCode;
+import io.silksource.silk.acceptancetest.questions.TheMain;
+import io.silksource.silk.acceptancetest.tasks.AddAField;
+import io.silksource.silk.acceptancetest.tasks.CreateATest;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.inmemory.InMemoryEvents;
 import io.silksource.silk.code.inmemory.InMemoryProject;

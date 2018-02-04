@@ -1,4 +1,4 @@
-package com.remonsinnema.silk.code.heal;
+package io.silksource.silk.code.heal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;

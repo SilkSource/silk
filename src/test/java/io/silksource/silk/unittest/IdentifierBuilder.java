@@ -1,4 +1,4 @@
-package com.remonsinnema.silk.unittest;
+package io.silksource.silk.unittest;
 
 import java.util.Random;
 import java.util.stream.Stream;
