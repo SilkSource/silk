@@ -4,7 +4,7 @@ import static com.remonsinnema.silk.unittest.IdentifierBuilder.someIdentifier;
 
 import java.util.Random;
 
-import com.remonsinnema.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.FullyQualifiedName;
 
 
 public class FqnBuilder {

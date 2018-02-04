@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.remonsinnema.silk.code.api.Events;
-import com.remonsinnema.silk.code.api.FullyQualifiedName;
-import com.remonsinnema.silk.code.api.Project;
-import com.remonsinnema.silk.code.api.SourceSet;
-import com.remonsinnema.silk.code.api.SourceSets;
-import com.remonsinnema.silk.code.api.Type;
-import com.remonsinnema.silk.code.event.FieldAddedEvent;
-import com.remonsinnema.silk.code.event.TypeAddedEvent;
-import com.remonsinnema.silk.code.inmemory.InMemoryEvents;
+import io.silksource.silk.code.api.Events;
+import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.Project;
+import io.silksource.silk.code.api.SourceSet;
+import io.silksource.silk.code.api.SourceSets;
+import io.silksource.silk.code.api.Type;
+import io.silksource.silk.code.event.FieldAddedEvent;
+import io.silksource.silk.code.event.TypeAddedEvent;
+import io.silksource.silk.code.inmemory.InMemoryEvents;
 
 
 public abstract class WhenManipulatingCode {

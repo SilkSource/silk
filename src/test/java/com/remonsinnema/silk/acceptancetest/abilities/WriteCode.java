@@ -1,8 +1,7 @@
 package com.remonsinnema.silk.acceptancetest.abilities;
 
-import com.remonsinnema.silk.code.api.Project;
-import com.remonsinnema.silk.core.Silk;
-
+import io.silksource.silk.code.api.Project;
+import io.silksource.silk.core.Silk;
 import net.serenitybdd.screenplay.Ability;
 import net.serenitybdd.screenplay.Actor;
 

@@ -1,9 +1,10 @@
 package com.remonsinnema.silk.code.inmemory;
 
-import com.remonsinnema.silk.code.api.Events;
-import com.remonsinnema.silk.code.api.Project;
 import com.remonsinnema.silk.code.heal.WhenManipulatingCode;
-import com.remonsinnema.silk.code.inmemory.InMemoryProject;
+
+import io.silksource.silk.code.api.Events;
+import io.silksource.silk.code.api.Project;
+import io.silksource.silk.code.inmemory.InMemoryProject;
 
 
 public class WhenManipulatingCodeInMemory extends WhenManipulatingCode {

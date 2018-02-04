@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.remonsinnema.silk.acceptancetest.abilities.WriteCode;
-import com.remonsinnema.silk.code.api.SourceSets;
 
+import io.silksource.silk.code.api.SourceSets;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.annotations.Subject;

@@ -1,9 +1,9 @@
 package com.remonsinnema.silk.acceptancetest.tasks;
 
 import com.remonsinnema.silk.acceptancetest.abilities.WriteCode;
-import com.remonsinnema.silk.code.api.FullyQualifiedName;
-import com.remonsinnema.silk.code.api.SourceSets;
 
+import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.SourceSets;
 import net.serenitybdd.core.steps.Instrumented;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;

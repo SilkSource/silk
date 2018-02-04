@@ -15,10 +15,10 @@ import com.remonsinnema.silk.acceptancetest.abilities.WriteCode;
 import com.remonsinnema.silk.acceptancetest.questions.TheMain;
 import com.remonsinnema.silk.acceptancetest.tasks.AddAField;
 import com.remonsinnema.silk.acceptancetest.tasks.CreateATest;
-import com.remonsinnema.silk.code.api.Project;
-import com.remonsinnema.silk.code.inmemory.InMemoryEvents;
-import com.remonsinnema.silk.code.inmemory.InMemoryProject;
 
+import io.silksource.silk.code.api.Project;
+import io.silksource.silk.code.inmemory.InMemoryEvents;
+import io.silksource.silk.code.inmemory.InMemoryProject;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 
