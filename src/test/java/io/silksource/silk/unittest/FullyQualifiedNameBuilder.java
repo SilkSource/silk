@@ -7,10 +7,10 @@ import java.util.Random;
 import io.silksource.silk.code.api.FullyQualifiedName;
 
 
-public class FqnBuilder {
+public class FullyQualifiedNameBuilder {
 
-  public static FullyQualifiedName someFqn() {
-    return new FqnBuilder().build();
+  public static FullyQualifiedName someFullyQualifiedName() {
+    return new FullyQualifiedNameBuilder().build();
   }
 
   private final Random random = new Random();
@@ -25,12 +25,12 @@ public class FqnBuilder {
     return new FullyQualifiedName(somePackage(), identifier);
   }
 
-  public FqnBuilder withPackage(FullyQualifiedName parent) {
+  public FullyQualifiedNameBuilder withPackage(FullyQualifiedName parent) {
     this.parent = parent;
     return this;
   }
 
-  public FqnBuilder withName(String name) {
+  public FullyQualifiedNameBuilder withName(String name) {
     this.name = name;
     return this;
   }

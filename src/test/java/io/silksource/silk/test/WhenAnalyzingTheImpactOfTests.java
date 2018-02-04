@@ -1,6 +1,6 @@
 package io.silksource.silk.test;
 
-import static io.silksource.silk.unittest.FqnBuilder.someFqn;
+import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -16,12 +16,12 @@ public class WhenAnalyzingTheImpactOfTests {
   private final TestImpactMap testImpactMap = new InMemoryTestImpactMap();
 
   @Test
-  public void shouldReportWhichTestsTouchingAGivenSource() {
-    FullyQualifiedName testName1 = someFqn();
-    FullyQualifiedName testName2 = someFqn();
-    FullyQualifiedName sourceName1 = someFqn();
-    FullyQualifiedName sourceName2 = someFqn();
-    FullyQualifiedName sourceName3 = someFqn();
+  public void shouldRegisterWhichTestsTouchAGivenSource() {
+    FullyQualifiedName testName1 = someFullyQualifiedName();
+    FullyQualifiedName testName2 = someFullyQualifiedName();
+    FullyQualifiedName sourceName1 = someFullyQualifiedName();
+    FullyQualifiedName sourceName2 = someFullyQualifiedName();
+    FullyQualifiedName sourceName3 = someFullyQualifiedName();
 
     testImpactMap.testTouches(testName1, Arrays.asList(sourceName1, sourceName2));
     testImpactMap.testTouches(testName2, Arrays.asList(sourceName1));
@@ -34,6 +34,19 @@ public class WhenAnalyzingTheImpactOfTests {
   private void assertIsTouchedBy(FullyQualifiedName sourceName, FullyQualifiedName... testNames) {
     assertEquals("Tests touching " + sourceName, new TreeSet<>(Arrays.asList(testNames)),
         testImpactMap.testsTouching(sourceName));
+  }
+
+  @Test
+  public void shouldRemovePreviouslyRegisteredTouches() {
+    FullyQualifiedName testName = someFullyQualifiedName();
+    FullyQualifiedName sourceName1 = someFullyQualifiedName();
+    FullyQualifiedName sourceName2 = someFullyQualifiedName();
+
+    testImpactMap.testTouches(testName, Arrays.asList(sourceName1, sourceName2));
+    testImpactMap.testTouches(testName, Arrays.asList(sourceName1));
+
+    assertIsTouchedBy(sourceName1, testName);
+    assertIsTouchedBy(sourceName2);
   }
 
 }

@@ -12,17 +12,18 @@ import io.silksource.silk.code.api.FullyQualifiedName;
 
 public class InMemoryTestImpactMap implements TestImpactMap {
 
-  private final Map<FullyQualifiedName, SortedSet<FullyQualifiedName>> sourcesByTouchingTests
+  private final Map<FullyQualifiedName, SortedSet<FullyQualifiedName>> testsBySourcesTheyTouch
       = new HashMap<>();
 
   @Override
   public void testTouches(FullyQualifiedName testName,
       Collection<FullyQualifiedName> touchedSourceNames) {
+    testsBySourcesTheyTouch.values().forEach(testNames -> testNames.remove(testName));
     touchedSourceNames.forEach(sourceName -> getTestsTouching(sourceName).add(testName));
   }
 
   private SortedSet<FullyQualifiedName> getTestsTouching(FullyQualifiedName sourceName) {
-    return sourcesByTouchingTests.computeIfAbsent(sourceName, ignored -> new TreeSet<>());
+    return testsBySourcesTheyTouch.computeIfAbsent(sourceName, ignored -> new TreeSet<>());
   }
 
   @Override
