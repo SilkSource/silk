@@ -5,7 +5,6 @@
 hs_err_pid*
 .classpath
 .project
-/bin/
 /classes/
 /build/
 /.gradle/
