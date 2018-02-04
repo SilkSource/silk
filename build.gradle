@@ -10,7 +10,16 @@ buildscript {
 apply plugin: 'java'
 
 apply plugin: 'eclipse'
-eclipse.classpath.defaultOutputDir = file('classes')
+eclipse.classpath {
+  defaultOutputDir = file('classes')
+  file.whenMerged { classpath ->
+    classpath.entries.findAll { 
+      it.kind == 'src' && it.output.startsWith('bin/') 
+    }.each {
+      it.output = it.output.replace('bin/', 'classes/')
+    }
+  }
+}
 
 apply plugin: 'net.serenity-bdd.aggregator'
 check.dependsOn checkOutcomes
