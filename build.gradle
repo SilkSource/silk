@@ -1,63 +1,49 @@
 buildscript {
-	repositories {
-	  jcenter()
-	}
+  repositories {
+    jcenter()
+  }
   dependencies {
-    classpath 'org.yaml:snakeyaml:1.15'
+    classpath "net.serenity-bdd:serenity-gradle-plugin:$serenityVersion"
   }
 }
 
-import org.yaml.snakeyaml.Yaml
+apply plugin: 'java'
 
-plugins {
- id 'java'
- id 'eclipse'
-}
-
+apply plugin: 'eclipse'
 eclipse.classpath.defaultOutputDir = file('classes')
 
-defaultTasks 'build'
+apply plugin: 'net.serenity-bdd.aggregator'
+check.dependsOn checkOutcomes
+build.dependsOn aggregate
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.12'
+task deleteTargetDir(type: Delete) {
+  delete file('target')
 }
+
+task moveSerenityReportsToBuildDir(type: Copy) {
+  from file('target/site')
+  into reportsDir
+  mustRunAfter checkOutcomes
+  finalizedBy deleteTargetDir
+}
+
+aggregate.finalizedBy moveSerenityReportsToBuildDir
 
 repositories {
   jcenter()
 }
+
 dependencies {
-  testCompile 'net.serenity-bdd:serenity-jbehave:1.6.0',
-      'net.serenity-bdd:serenity-core:1.1.28'
+  compile "org.jacoco:org.jacoco.core:$jacocoVersion",
+    "org.junit.platform:junit-platform-launcher:$junit5Version",
+    "org.junit.vintage:junit-vintage-engine:$junit4Version"
+  testCompile "net.serenity-bdd:serenity-screenplay:$serenityVersion",
+      "net.serenity-bdd:serenity-junit:$serenityVersion"
 }
 
-task checkGlossary << {
-  validateYaml fileTree(dir: 'src/main/glossary')  
-}
 
-def validateYaml(files) {
-  def yaml = new Yaml()
-  files.include '**/*.yml'
-  files.each { file ->
-    file.withInputStream { stream ->
-      def map = yaml.load(stream)
-      if (!(map instanceof Map)) {
-        throw new GradleException("Invalid YAML file: $file.path")
-      }
-    }
-  }
-}
+defaultTasks 'build'
 
-task checkGoals << {
-  validateYaml fileTree(dir: 'src/main/goals')  
-}
-
-check.dependsOn 'checkGlossary', 'checkGoals'
-
-task cleanUpAfterTest(type: Delete) {
-  delete file('target')
-}
-
-test {
-  finalizedBy cleanUpAfterTest
-  systemProperty 'serenity.outputDirectory', new File(buildDir, 'jbehave').path
+task wrapper(type: Wrapper) {
+  gradleVersion = gradleWrapperVersion
 }
