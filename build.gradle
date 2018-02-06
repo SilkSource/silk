@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply from: 'coverage.gradle'
 
 apply plugin: 'eclipse'
 eclipse.classpath {
