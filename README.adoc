@@ -1,0 +1,6 @@
+image:https://img.shields.io/travis/SilkSource/silk.svg[title="Travis", link="https://travis-ci.org/SilkSource/silk"]
+image:https://img.shields.io/codecov/c/github/SilkSource/silk.svg[title="Code coverage", link="https://codecov.io/github/SilkSource/silk"]
+
+= Silk
+
+Smooth software development.
