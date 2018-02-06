@@ -15,4 +15,8 @@ addons:
     packages:
     - oracle-java8-installer
 install: true
-script: ./gradlew --no-daemon
+script: "./gradlew --no-daemon"
+env:
+  global:
+    # sonarToken
+    secure: g91hljetYBf2PXLz+/0ToYyEWGxJFGFM9+oXDoQTyBQROFqSkeN0NP6u2sBeLGHE1PQDzL086UrXlE8hpReBZ8TbeelgbVi39YbmrETmtvgdjaMt/wb/5c3DRma3QsEHJduaXwwvfE7z0nofeits6C7qGV6kie/aw18bFAxbQe4QcsJZIKczsGnXeD1GuA7crYKEG5dpXmR2HJ6m5l4QY5fSEw1hdWaoxnCoOSqNtiTewf5ReUPoKtK1g7tG3f/n4iI2oCNONyOKqplDQC5zuJevem/+a3SODTJTr11FaAp7T7Yp/gOw8MiMS14YNdE5RxU6uQRNr7qwJfohpJzN/4GUOVbIyV0KgK517JU7pMIRB1TAIzOi1/VNEeuV9CAOk0MRAxuER1vOIVPQMS9yPjbi6g9GDJXu+2pfzHVIeaFNEBvIFCMtcB+0gcT2K+4P6YLNfpiAstKimw2KCJmctyJVdP/TzzO3ujTuM9sa4kv0i/ASloBe9e5uFQ+ph++XDsFG2NlVDFVAUQpKwQMPTB2sadu3Kh/3hUXDT7JOPSMTByeUhDxTcPSvvzIe6ZHEiBv8jB7R02uCZlBXIZLqXeG8UQ444Ey3ZodzTJSC3Eu4kz8r2F9RT8LHpbbVs21j9XrkLmlGx9ba3Sxsk06cvrvhU3krHsvhT6Iqk4t/s7o=
