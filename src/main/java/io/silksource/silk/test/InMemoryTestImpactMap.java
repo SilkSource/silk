@@ -27,6 +27,11 @@ public class InMemoryTestImpactMap implements TestImpactMap {
   }
 
   @Override
+  public SortedSet<FullyQualifiedName> sources() {
+    return new TreeSet<>(testsBySourcesTheyTouch.keySet());
+  }
+
+  @Override
   public SortedSet<FullyQualifiedName> testsTouching(FullyQualifiedName sourceName) {
     return Collections.unmodifiableSortedSet(getTestsTouching(sourceName));
   }

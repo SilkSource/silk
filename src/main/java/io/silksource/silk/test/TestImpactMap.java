@@ -26,4 +26,9 @@ public interface TestImpactMap {
    */
   SortedSet<FullyQualifiedName> testsTouching(FullyQualifiedName sourceName);
 
+  /**
+   * Returns all sources for which test impact information is available.
+   */
+  SortedSet<FullyQualifiedName> sources();
+
 }
