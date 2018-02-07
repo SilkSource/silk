@@ -1,21 +1,21 @@
-package io.silksource.silk.code.inmemory;
+package io.silksource.silk.code.file;
 
 import io.silksource.silk.code.api.Member;
 import io.silksource.silk.code.api.Type;
 
 
-public class InMemoryMember implements Member {
+public class DefaultMember implements Member {
 
   private final Type ownerType;
   private final String name;
 
-  public InMemoryMember(Type ownerType, String name) {
+  public DefaultMember(Type ownerType, String name) {
     this.ownerType = ownerType;
     this.name = name;
   }
 
   @Override
-  public Type getOwnerType() {
+  public Type getOwningType() {
     return ownerType;
   }
 

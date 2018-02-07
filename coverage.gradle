@@ -5,8 +5,8 @@ jacoco {
 }
 
 ext.limits = [
-  'line' : 50,
-  'complexity' : 60
+  'line' : 25,
+  'complexity' : 25
 ]
 
 jacocoTestReport {

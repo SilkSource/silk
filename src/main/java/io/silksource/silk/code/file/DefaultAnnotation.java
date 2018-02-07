@@ -1,14 +1,14 @@
-package io.silksource.silk.code.inmemory;
+package io.silksource.silk.code.file;
 
 import io.silksource.silk.code.api.Annotation;
 import io.silksource.silk.code.api.FullyQualifiedName;
 
 
-public class InMemoryAnnotation implements Annotation {
+public class DefaultAnnotation implements Annotation {
 
   private final FullyQualifiedName type;
 
-  public InMemoryAnnotation(FullyQualifiedName type) {
+  public DefaultAnnotation(FullyQualifiedName type) {
     this.type = type;
   }
 

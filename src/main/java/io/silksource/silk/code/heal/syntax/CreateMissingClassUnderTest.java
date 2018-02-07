@@ -5,7 +5,7 @@ import java.util.Locale;
 import io.silksource.silk.code.api.Events;
 import io.silksource.silk.code.api.Field;
 import io.silksource.silk.code.api.FullyQualifiedName;
-import io.silksource.silk.code.api.SourceSets;
+import io.silksource.silk.code.api.SourceSetNames;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.FieldAddedEvent;
 import io.silksource.silk.code.heal.CodeHealer;
@@ -26,7 +26,7 @@ public class CreateMissingClassUnderTest implements CodeHealer {
     Type ownerType = event.getType();
     FullyQualifiedName fieldType = field.getType();
     if (isReferenceToClassUnderTest(ownerType, fieldType)) {
-      ownerType.getProject().sourceSet(SourceSets.MAIN).addType(fieldType);
+      ownerType.getProject().sourceSet(SourceSetNames.MAIN).get().addType(fieldType);
     }
   }
 
@@ -37,7 +37,7 @@ public class CreateMissingClassUnderTest implements CodeHealer {
   }
 
   private String simpleNameOf(FullyQualifiedName fullyQualifiedName) {
-    return fullyQualifiedName.simpleName().toLowerCase(Locale.ENGLISH);
+    return fullyQualifiedName.getSimpleName().toLowerCase(Locale.ENGLISH);
   }
 
 }

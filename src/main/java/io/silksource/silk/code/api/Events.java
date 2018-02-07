@@ -1,12 +1,44 @@
 package io.silksource.silk.code.api;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 
-public interface Events {
+/**
+ * Central authority for notifying that something interesting happened and for responding to such
+ * events.
+ */
+public class Events {
 
-  <T> void listenFor(Class<T> eventType, Consumer<T> handler);
+  private final Map<Class<?>, Collection<Consumer<?>>> handlersByEventType = new HashMap<>();
 
-  void fire(Object event);
+  /**
+   * Request notification when something interesting happens.
+   * @param eventType the type of events that are interesting to the caller
+   * @param handler callback that gets invoked whenever an event of the given type happens
+   */
+  public <T> void listenFor(Class<T> eventType, Consumer<T> handler) {
+    Objects.requireNonNull(eventType, "Missing event type");
+    Objects.requireNonNull(handler, "Missing handler");
+    handlersByEventType.computeIfAbsent(eventType, ignored -> new ArrayList<>()).add(handler);
+  }
+
+  /**
+   * Notify interested parties that an event occurred.
+   * @param event the event that occurred
+   */
+  @SuppressWarnings("unchecked")
+  public <T> void fire(T event) {
+    handlersByEventType.entrySet().stream()
+        .filter(e -> e.getKey().isAssignableFrom(event.getClass()))
+        .map(Entry::getValue)
+        .flatMap(Collection::stream)
+        .forEach(c -> ((Consumer<T>)c).accept(event));
+  }
 
 }

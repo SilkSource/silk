@@ -51,7 +51,8 @@ dependencies {
   compile "org.jacoco:org.jacoco.core:$jacocoVersion",
     "org.junit.platform:junit-platform-launcher:$junit5Version",
     "org.junit.vintage:junit-vintage-engine:$junit4Version",
-    'org.yaml:snakeyaml:1.19'
+    'org.yaml:snakeyaml:1.19',
+    'commons-io:commons-io:2.6'
   testCompile "net.serenity-bdd:serenity-screenplay:$serenityVersion",
       "net.serenity-bdd:serenity-junit:$serenityVersion"
 }

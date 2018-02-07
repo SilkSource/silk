@@ -1,36 +1,42 @@
 package io.silksource.silk.test.runner;
 
-import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
-import static io.silksource.silk.unittest.IdentifierBuilder.someIdentifier;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.util.Set;
+
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
-import io.silksource.silk.code.api.FullyQualifiedName;
 import io.silksource.silk.code.api.Method;
 import io.silksource.silk.code.api.Project;
-import io.silksource.silk.code.api.SourceSet;
-import io.silksource.silk.code.api.SourceSets;
-import io.silksource.silk.code.api.Type;
-import io.silksource.silk.code.inmemory.InMemoryProject;
+import io.silksource.silk.code.file.FileBasedProject;
 
 
 public class WhenTestingUsingJUnit {
 
+  @Rule
+  public TestName testName = new TestName();
   private final TestRunner testRunner = new JUnitTestRunner();
 
   @Test
+  @Ignore("TODO: Make this work")
   public void shouldDiscoverTests() {
-    Project project = new InMemoryProject();
-    SourceSet sourceSet = project.sourceSet(SourceSets.MAIN);
-    Type type = sourceSet.addType(someFullyQualifiedName());
-    type.addMethod(someIdentifier());
-    Method testMethod = type.addMethod(someIdentifier());
-    testMethod.addAnnotation(new FullyQualifiedName(Test.class.getName()));
+    Project project = new FileBasedProject(new File("."));
 
-    /*Set<Method> discoveredTestMethods =*/ testRunner.findTestMethodsIn(project);
+    Set<Method> discoveredTestMethods = testRunner.findTestMethodsIn(project);
 
-    // TODO: Make this work"
-    // assertEquals("Test methods", Collections.singleton(testMethod), discoveredTestMethods);
+    assertTrue("Current test method is not discovered by runner", discoveredTestMethods.stream()
+        .filter(this::isCurrentMethod)
+        .findAny()
+        .isPresent());
+  }
+
+  private boolean isCurrentMethod(Method method) {
+    return testName.getMethodName().equals(method.getName())
+        && getClass().getName().equals(method.getOwningType().getName().toString());
   }
 
 }

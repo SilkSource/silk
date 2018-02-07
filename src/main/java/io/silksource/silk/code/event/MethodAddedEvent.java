@@ -8,7 +8,7 @@ public class MethodAddedEvent extends TypeChangedEvent {
   private final Method method;
 
   public MethodAddedEvent(Method method) {
-    super(method.getOwnerType());
+    super(method.getOwningType());
     this.method = method;
   }
 

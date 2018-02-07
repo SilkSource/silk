@@ -1,4 +1,4 @@
-package io.silksource.silk.code.inmemory;
+package io.silksource.silk.code.file;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,17 +10,17 @@ import io.silksource.silk.code.api.Method;
 import io.silksource.silk.code.api.Type;
 
 
-public class InMemoryMethod extends InMemoryMember implements Method {
+public class DefaultMethod extends DefaultMember implements Method {
 
   private final Collection<Annotation> annotations = new ArrayList<>();
 
-  public InMemoryMethod(Type ownerType, String name) {
+  public DefaultMethod(Type ownerType, String name) {
     super(ownerType, name);
   }
 
   @Override
   public Annotation addAnnotation(FullyQualifiedName type) {
-    Annotation result = new InMemoryAnnotation(type);
+    Annotation result = new DefaultAnnotation(type);
     annotations.add(result);
     return result;
   }

@@ -14,7 +14,7 @@ import org.junit.Test;
 import io.silksource.silk.code.api.FullyQualifiedName;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.api.SourceSet;
-import io.silksource.silk.code.api.SourceSets;
+import io.silksource.silk.code.api.SourceSetNames;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.FieldAddedEvent;
 import io.silksource.silk.code.event.TypeAddedEvent;
@@ -43,12 +43,11 @@ public abstract class WhenManipulatingCode {
 
   @Test
   public void shouldCreateAClass() {
-    String sourceSet = SourceSets.MAIN;
     String type = "com.foo.Bar";
+    SourceSet sourceSet = project.sourceSet(SourceSetNames.MAIN).get();
+    sourceSet.addType(new FullyQualifiedName(type));
 
-    project.sourceSet(sourceSet).addType(new FullyQualifiedName(type));
-
-    assertThat("Type added", project.sourceSet(sourceSet).getTypes().stream()
+    assertThat("Type added", sourceSet.getTypes().stream()
         .map(t -> t.getName()).collect(Collectors.toList()), hasItem(type));
     assertThat("TypeAddedEvent fired", firedEvent(TypeAddedEvent.class).getType().getName(),
         equalTo(type));
@@ -59,7 +58,7 @@ public abstract class WhenManipulatingCode {
     String typeName = "Baz";
     String fieldName = "gnu";
     String fieldType = "Gnu";
-    SourceSet sourceSet = project.sourceSet(SourceSets.TEST);
+    SourceSet sourceSet = project.sourceSet(SourceSetNames.TEST).get();
     Type type = sourceSet.addType(new FullyQualifiedName(typeName));
 
     type.addField(fieldName, sourceSet.addType(new FullyQualifiedName(fieldType)).getName());

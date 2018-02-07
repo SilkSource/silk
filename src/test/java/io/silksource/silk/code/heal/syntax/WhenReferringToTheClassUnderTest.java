@@ -11,12 +11,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.google.common.io.Files;
+
 import io.silksource.silk.acceptancetest.abilities.WriteCode;
 import io.silksource.silk.acceptancetest.questions.TheMain;
 import io.silksource.silk.acceptancetest.tasks.AddAField;
 import io.silksource.silk.acceptancetest.tasks.CreateATest;
 import io.silksource.silk.code.api.Project;
-import io.silksource.silk.code.inmemory.InMemoryProject;
+import io.silksource.silk.code.file.FileBasedProject;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 
@@ -25,7 +27,7 @@ import net.serenitybdd.screenplay.Actor;
 public class WhenReferringToTheClassUnderTest {
 
   private final Actor dave = Actor.named("Dave");
-  private final Project hisProject = new InMemoryProject();
+  private final Project hisProject = new FileBasedProject(Files.createTempDir());
 
   @Before
   public void daveCanWriteCode() {

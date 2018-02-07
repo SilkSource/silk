@@ -1,5 +1,6 @@
 package io.silksource.silk.spike;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.jacoco.core.analysis.Analyzer;
@@ -18,11 +19,11 @@ import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.TypeAddedEvent;
+import io.silksource.silk.code.file.FileBasedProject;
+import io.silksource.silk.code.file.FileBasedSourceSet;
+import io.silksource.silk.code.file.FileBasedType;
 import io.silksource.silk.code.heal.CodeHealer;
 import io.silksource.silk.code.heal.syntax.CreateMissingClassUnderTest;
-import io.silksource.silk.code.inmemory.InMemoryProject;
-import io.silksource.silk.code.inmemory.InMemorySourceSet;
-import io.silksource.silk.code.inmemory.InMemoryType;
 
 
 public class JacocoSpike {
@@ -37,9 +38,9 @@ public class JacocoSpike {
   }
 
   private void run() throws Exception {
-    Project project = new InMemoryProject();
-    SourceSet sourceSet = new InMemorySourceSet(project, "main");
-    Type type = new InMemoryType(sourceSet, new FullyQualifiedName(
+    Project project = new FileBasedProject(File.createTempFile("project-", "-spike"));
+    SourceSet sourceSet = new FileBasedSourceSet(project, "main");
+    Type type = new FileBasedType(sourceSet, new FullyQualifiedName(
         CreateMissingClassUnderTest.class.getName()));
     String targetClassName = type.getName().toString();
 

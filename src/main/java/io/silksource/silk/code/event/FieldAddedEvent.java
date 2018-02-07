@@ -8,7 +8,7 @@ public class FieldAddedEvent extends TypeChangedEvent {
   private final Field field;
 
   public FieldAddedEvent(Field field) {
-    super(field.getOwnerType());
+    super(field.getOwningType());
     this.field = field;
   }
 

@@ -1,23 +1,49 @@
 package io.silksource.silk.code.api;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
-public interface Project {
+/**
+ * Collection of sources that belong together. Sources that serve the same purpose are grouped in
+ * {@linkplain SourceSet}s.
+ */
+public interface Project extends FileBased {
 
+  /**
+   * Add a source set to the project.
+   * @param name The name of the source set
+   * @return the added source set
+   */
   SourceSet addSourceSet(String name);
 
+  /**
+   * Returns the source sets in the project.
+   * @return the source sets in the project
+   */
   Collection<SourceSet> getSourceSets();
 
-  default SourceSet sourceSet(String name) {
+  /**
+   * Returns the source set with the given name, if any.
+   * @param name the name of the source set to return
+   * @return an optional source set
+   */
+  default Optional<SourceSet> sourceSet(String name) {
     return getSourceSets().stream()
         .filter(s -> s.getName().equals(name))
-        .findAny()
-        .orElse(null);
+        .findAny();
   }
 
+  /**
+   * Returns the events for the project.
+   * @return the events for the project
+   */
   Events getEvents();
 
+  /**
+   * Notify others that something interesting happened.
+   * @param event the interesting thing that happened
+   */
   default void fire(Object event) {
     getEvents().fire(event);
   }
