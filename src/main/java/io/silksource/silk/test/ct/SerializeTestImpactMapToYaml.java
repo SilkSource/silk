@@ -1,4 +1,4 @@
-package io.silksource.silk.test;
+package io.silksource.silk.test.ct;
 
 import java.io.InputStream;
 import java.io.OutputStream;

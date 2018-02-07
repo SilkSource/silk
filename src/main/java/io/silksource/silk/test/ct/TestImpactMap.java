@@ -1,4 +1,4 @@
-package io.silksource.silk.test;
+package io.silksource.silk.test.ct;
 
 import java.util.Collection;
 import java.util.SortedSet;

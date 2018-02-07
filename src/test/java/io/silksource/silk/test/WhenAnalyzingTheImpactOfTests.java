@@ -9,6 +9,8 @@ import java.util.TreeSet;
 import org.junit.Test;
 
 import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.test.ct.InMemoryTestImpactMap;
+import io.silksource.silk.test.ct.TestImpactMap;
 
 
 public class WhenAnalyzingTheImpactOfTests {

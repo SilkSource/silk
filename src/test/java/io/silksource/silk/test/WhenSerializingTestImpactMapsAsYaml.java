@@ -23,6 +23,8 @@ import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.test.ct.SerializeTestImpactMapToYaml;
+import io.silksource.silk.test.ct.TestImpactMap;
 
 
 @SuppressWarnings("unchecked")

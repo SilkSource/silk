@@ -13,7 +13,7 @@ public interface Type {
     return getSourceSet().getProject();
   }
 
-  Field addField(FullyQualifiedName type, String name);
+  Member addField(FullyQualifiedName type, String name);
 
   List<Field> getFields();
 

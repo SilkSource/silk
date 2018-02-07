@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.silksource.silk.code.api.Field;
 import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.Member;
 import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.FieldAddedEvent;
@@ -33,7 +34,7 @@ public class InMemoryType implements Type {
   }
 
   @Override
-  public Field addField(FullyQualifiedName type, String name) {
+  public Member addField(FullyQualifiedName type, String name) {
     Field result = new InMemoryField(this, type, name);
     fields.add(result);
     getProject().fire(new FieldAddedEvent(result));

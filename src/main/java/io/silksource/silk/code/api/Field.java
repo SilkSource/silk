@@ -1,11 +1,7 @@
 package io.silksource.silk.code.api;
 
 
-public interface Field {
-
-  Type getOwnerType();
-
-  String getName();
+public interface Field extends Member {
 
   FullyQualifiedName getType();
 
