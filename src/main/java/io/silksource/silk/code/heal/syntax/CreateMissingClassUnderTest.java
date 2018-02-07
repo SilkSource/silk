@@ -23,7 +23,7 @@ public class CreateMissingClassUnderTest implements CodeHealer {
 
   private void addMissingClassUnderTest(FieldAddedEvent event) {
     Field field = event.getField();
-    Type ownerType = field.getOwnerType();
+    Type ownerType = event.getType();
     FullyQualifiedName fieldType = field.getType();
     if (isReferenceToClassUnderTest(ownerType, fieldType)) {
       ownerType.getProject().sourceSet(SourceSets.MAIN).add(fieldType);

@@ -7,7 +7,11 @@ import io.silksource.silk.code.heal.CodeHealer;
 import io.silksource.silk.code.heal.syntax.CreateMissingClassUnderTest;
 
 
-public class Silk {
+public final class Silk {
+
+  private Silk() {
+    // Utility class
+  }
 
   private static final Iterable<CodeHealer> CODE_HEALERS = Arrays.asList(
       new CreateMissingClassUnderTest());

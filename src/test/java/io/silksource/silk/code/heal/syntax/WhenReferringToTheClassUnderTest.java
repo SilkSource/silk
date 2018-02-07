@@ -16,7 +16,6 @@ import io.silksource.silk.acceptancetest.questions.TheMain;
 import io.silksource.silk.acceptancetest.tasks.AddAField;
 import io.silksource.silk.acceptancetest.tasks.CreateATest;
 import io.silksource.silk.code.api.Project;
-import io.silksource.silk.code.inmemory.InMemoryEvents;
 import io.silksource.silk.code.inmemory.InMemoryProject;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -26,7 +25,7 @@ import net.serenitybdd.screenplay.Actor;
 public class WhenReferringToTheClassUnderTest {
 
   private final Actor dave = Actor.named("Dave");
-  private final Project hisProject = new InMemoryProject(new InMemoryEvents());
+  private final Project hisProject = new InMemoryProject();
 
   @Before
   public void daveCanWriteCode() {
