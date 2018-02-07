@@ -15,7 +15,7 @@ addons:
     packages:
     - oracle-java8-installer
 install: true
-script: "./gradlew --no-daemon"
+script: "./gradlew --no-daemon --warning-mode=all"
 env:
   global:
     # ORG_GRADLE_PROJECT_sonarToken
