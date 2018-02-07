@@ -33,7 +33,7 @@ public class InMemorySourceSet implements SourceSet {
   }
 
   @Override
-  public Type add(FullyQualifiedName type) {
+  public Type addType(FullyQualifiedName type) {
     Type result = new InMemoryType(this, type);
     types.add(result);
     getProject().fire(new TypeAddedEvent(result));
@@ -43,6 +43,11 @@ public class InMemorySourceSet implements SourceSet {
   @Override
   public List<Type> getTypes() {
     return Collections.unmodifiableList(types);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("%s sources", name);
   }
 
 }

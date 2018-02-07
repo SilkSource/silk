@@ -1,6 +1,6 @@
 package io.silksource.silk.code.inmemory;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -17,13 +17,17 @@ public class InMemoryProject implements Project {
   private final Events events;
 
   public InMemoryProject() {
-    this(new InMemoryEvents());
+    this.sourceSets = new ArrayList<>();
+    addSourceSet(SourceSets.MAIN);
+    addSourceSet(SourceSets.TEST);
+    this.events = new InMemoryEvents();
   }
 
-  public InMemoryProject(Events events) {
-    this.sourceSets = Arrays.asList(new InMemorySourceSet(this, SourceSets.MAIN),
-        new InMemorySourceSet(this, SourceSets.TEST));
-    this.events = events;
+  @Override
+  public SourceSet addSourceSet(String name) {
+    SourceSet result = new InMemorySourceSet(this, name);
+    sourceSets.add(result);
+    return result;
   }
 
   @Override

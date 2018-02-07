@@ -17,7 +17,7 @@ public class CreateATest implements Task {
   @Override
   @Step("{0} adds the test class '#testName'")
   public <T extends Actor> void performAs(T actor) {
-    WriteCode.as(actor).sourceSet(SourceSets.TEST).add(new FullyQualifiedName(testName));
+    WriteCode.as(actor).sourceSet(SourceSets.TEST).addType(new FullyQualifiedName(testName));
   }
 
   public static Performable named(String testName) {

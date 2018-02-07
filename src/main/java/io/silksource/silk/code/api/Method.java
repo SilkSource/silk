@@ -1,12 +1,12 @@
 package io.silksource.silk.code.api;
 
-import java.util.List;
+import java.util.Collection;
 
 
 public interface Method extends Member {
 
-  Type getReturnType();
+  Annotation addAnnotation(FullyQualifiedName type);
 
-  List<Parameter> getParameters();
+  Collection<Annotation> getAnnotations();
 
 }

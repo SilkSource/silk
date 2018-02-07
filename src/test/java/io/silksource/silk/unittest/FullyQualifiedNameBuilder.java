@@ -1,6 +1,7 @@
 package io.silksource.silk.unittest;
 
 import static io.silksource.silk.unittest.IdentifierBuilder.someIdentifier;
+import static io.silksource.silk.unittest.IdentifierBuilder.someTypeName;
 
 import java.util.Random;
 
@@ -15,7 +16,7 @@ public class FullyQualifiedNameBuilder {
 
   private final Random random = new Random();
   private FullyQualifiedName parent = somePackage();
-  private String name = someIdentifier();
+  private String name = someTypeName();
 
   private FullyQualifiedName somePackage() {
     String identifier = someIdentifier();

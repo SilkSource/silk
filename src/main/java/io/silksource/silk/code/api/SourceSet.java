@@ -9,7 +9,7 @@ public interface SourceSet {
 
   Project getProject();
 
-  Type add(FullyQualifiedName type);
+  Type addType(FullyQualifiedName type);
 
   List<Type> getTypes();
 

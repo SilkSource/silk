@@ -22,7 +22,7 @@ public class AddAField implements Task {
     WriteCode.as(actor)
         .sourceSet(SourceSets.TEST)
         .type(new FullyQualifiedName(typeName))
-        .addField(new FullyQualifiedName(fieldType), fieldName);
+        .addField(fieldName, new FullyQualifiedName(fieldType));
   }
 
   public AddAField(String type, String fieldType, String fieldName) {

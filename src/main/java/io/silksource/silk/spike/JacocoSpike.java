@@ -13,7 +13,6 @@ import org.jacoco.core.runtime.IRuntime;
 import org.jacoco.core.runtime.RuntimeData;
 import org.jacoco.core.runtime.SystemPropertiesRuntime;
 
-import io.silksource.silk.code.api.Events;
 import io.silksource.silk.code.api.FullyQualifiedName;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.api.SourceSet;
@@ -21,7 +20,6 @@ import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.TypeAddedEvent;
 import io.silksource.silk.code.heal.CodeHealer;
 import io.silksource.silk.code.heal.syntax.CreateMissingClassUnderTest;
-import io.silksource.silk.code.inmemory.InMemoryEvents;
 import io.silksource.silk.code.inmemory.InMemoryProject;
 import io.silksource.silk.code.inmemory.InMemorySourceSet;
 import io.silksource.silk.code.inmemory.InMemoryType;
@@ -39,8 +37,7 @@ public class JacocoSpike {
   }
 
   private void run() throws Exception {
-    Events events = new InMemoryEvents();
-    Project project = new InMemoryProject(events);
+    Project project = new InMemoryProject();
     SourceSet sourceSet = new InMemorySourceSet(project, "main");
     Type type = new InMemoryType(sourceSet, new FullyQualifiedName(
         CreateMissingClassUnderTest.class.getName()));
@@ -58,8 +55,8 @@ public class JacocoSpike {
       targetClass = memoryClassLoader.loadClass(targetClassName);
     }
     CodeHealer codeHealer = (CodeHealer)targetClass.newInstance();
-    codeHealer.listenFor(events);
-    events.fire(new TypeAddedEvent(type));
+    codeHealer.listenFor(project.getEvents());
+    project.getEvents().fire(new TypeAddedEvent(type));
 
     ExecutionDataStore executionData = new ExecutionDataStore();
     SessionInfoStore sessionInfos = new SessionInfoStore();

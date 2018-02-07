@@ -13,8 +13,10 @@ public interface Type {
     return getSourceSet().getProject();
   }
 
-  Member addField(FullyQualifiedName type, String name);
+  Field addField(String name, FullyQualifiedName type);
 
   List<Field> getFields();
+
+  Method addMethod(String name);
 
 }

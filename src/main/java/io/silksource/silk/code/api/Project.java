@@ -5,6 +5,8 @@ import java.util.Collection;
 
 public interface Project {
 
+  SourceSet addSourceSet(String name);
+
   Collection<SourceSet> getSourceSets();
 
   default SourceSet sourceSet(String name) {
