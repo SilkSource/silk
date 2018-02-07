@@ -62,7 +62,6 @@ defaultTasks 'build'
 
 // [sonarToken] is encrypted in .travis.yml, so only available when building in Travis
 if (project.hasProperty('sonarToken')) {
-  logger.quiet 'Applying SonarQube plugin'
   System.setProperty('sonar.login', sonarToken)
   apply plugin: 'org.sonarqube'
   check.dependsOn 'sonarqube'

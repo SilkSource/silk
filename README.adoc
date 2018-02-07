@@ -4,7 +4,7 @@ image:https://img.shields.io/codecov/c/github/SilkSource/silk.svg[title="Code co
 
 = Silk
 
-Smooth software development.
+Libraries and IDE plugins to enable smooth software development.
 
 == Status
 
