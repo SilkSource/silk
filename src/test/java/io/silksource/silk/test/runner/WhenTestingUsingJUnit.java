@@ -22,7 +22,7 @@ public class WhenTestingUsingJUnit {
   private final TestRunner testRunner = new JUnitTestRunner();
 
   @Test
-  @Ignore("TODO: Make this work")
+  @Ignore("TODO: Make this work outside Eclipse")
   public void shouldDiscoverTests() {
     Project project = new FileBasedProject(new File("."));
 

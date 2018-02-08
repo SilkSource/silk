@@ -18,12 +18,12 @@ public interface SourceSet extends FileBased {
 
   @Override
   default Path getSourcePath() {
-    return getProject().getSourcePath().resolve(String.format("src/%s/java", getName()));
+    return getProject().getSourcePath().resolve(String.format("%s/java", getName()));
   }
 
   @Override
   default Path getCompiledPath() {
-    return getProject().getCompiledPath().resolve(String.format("classes/%s", getName()));
+    return getProject().getCompiledPath().resolve(getName());
   }
 
   /**

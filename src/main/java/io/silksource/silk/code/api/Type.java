@@ -31,6 +31,10 @@ public interface Type extends FileBased {
     return getSourceSet().getProject();
   }
 
+  default Events getEvents() {
+    return getProject().getEvents();
+  }
+
   @Override
   default Path getSourcePath() {
     return getSourceSet().getSourcePath().resolve(nameAsPath() + ".java");

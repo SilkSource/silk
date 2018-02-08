@@ -62,15 +62,14 @@ public class JUnitTestRunner implements TestRunner {
     Collection<TestIdentifier> parents = testIds.stream()
         .filter(id -> id.getUniqueId().equals(id.getParentId().get()))
         .collect(Collectors.toList());
-    Optional<ClassSource> classSource = parents.stream()
+    String typeName = parents.stream()
         .map(TestIdentifier::getSource)
         .map(Optional::get)
         .map(ClassSource.class::cast)
-        .findFirst();
-    if (!classSource.isPresent()) {
-      return Optional.empty();
-    }
-    Optional<Type> type = sourceSet.type(new FullyQualifiedName(classSource.get().getClassName()));
+        .map(ClassSource::getClassName)
+        .findFirst()
+        .orElse(methodSource.getClassName());
+    Optional<Type> type = sourceSet.type(new FullyQualifiedName(typeName));
     if (!type.isPresent()) {
       return Optional.empty();
     }

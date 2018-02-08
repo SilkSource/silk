@@ -12,34 +12,47 @@ import io.silksource.silk.code.api.Events;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.SourceSetNames;
+import io.silksource.silk.code.api.Type;
+import io.silksource.silk.code.event.TypeChangedEvent;
 
 
 public class FileBasedProject implements Project {
 
   private final List<SourceSet> sourceSets;
   private final Events events;
-  private final Path path;
+  private final Path root;
 
   public FileBasedProject(File dir) {
     try {
-      this.path = dir.getCanonicalFile().toPath();
+      this.root = dir.getCanonicalFile().toPath();
     } catch (IOException e) {
       throw new SourceSynchronizationException("Failed to canonicalize project dir: " + dir, e);
     }
+    this.events = new Events();
+    events.listenFor(TypeChangedEvent.class, this::typeChanged);
     this.sourceSets = new ArrayList<>();
     addSourceSet(SourceSetNames.MAIN);
     addSourceSet(SourceSetNames.TEST);
-    this.events = new Events();
+  }
+
+  private void typeChanged(TypeChangedEvent event) {
+    compile(event.getType());
+  }
+
+  private void compile(Type type) {
+    // TODO: Compile the type to a .class file
+    // Using Eclipse incremental Java compiler?
+    System.out.println("Compiling " + type.getName());
   }
 
   @Override
   public Path getSourcePath() {
-    return path;
+    return root.resolve("src");
   }
 
   @Override
   public Path getCompiledPath() {
-    return path;
+    return root.resolve("classes");
   }
 
   @Override

@@ -1,13 +1,15 @@
 package io.silksource.silk.code.file;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.objectweb.asm.ClassReader;
 
 import io.silksource.silk.code.api.Field;
 import io.silksource.silk.code.api.FullyQualifiedName;
@@ -16,6 +18,8 @@ import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.FieldAddedEvent;
 import io.silksource.silk.code.event.MethodAddedEvent;
+import io.silksource.silk.code.event.TypeChangedEvent;
+import io.silksource.silk.code.event.TypeCompiledEvent;
 
 
 public class FileBasedType implements Type {
@@ -25,15 +29,52 @@ public class FileBasedType implements Type {
   private final FullyQualifiedName name;
   private final List<Field> fields = new ArrayList<>();
   private final List<Method> methods = new ArrayList<>();
+  private boolean loading;
 
   public FileBasedType(SourceSet sourceSet, FullyQualifiedName name) {
     this.sourceSet = sourceSet;
     this.name = name;
-    File file = getSourcePath().toFile();
-    if (!file.isFile()) {
-      file.getParentFile().mkdirs();
-      setText(getInitialText());
+    getEvents().listenFor(TypeCompiledEvent.class, this::typeCompiled);
+    load();
+  }
+
+  private void typeCompiled(TypeCompiledEvent event) {
+    if (this.equals(event.getType())) {
+      loadCompiled();
     }
+  }
+
+  private void loadCompiled() {
+    loading = true;
+    try (InputStream input = Files.newInputStream(getCompiledPath(), StandardOpenOption.READ)) {
+      ClassReader reader = new ClassReader(input);
+      reader.accept(new TypeLoader(this), 0);
+    } catch (IOException e) {
+      throw new SourceSynchronizationException("Failed to load class bytes for " + this, e);
+    } finally {
+      loading = false;
+    }
+  }
+
+  private void load() {
+    if (Files.exists(getCompiledPath())) {
+      loadCompiled();
+    } else {
+      if (Files.exists(getSourcePath())) {
+        compile();
+      } else {
+        create();
+      }
+    }
+  }
+
+  private void compile() {
+    getEvents().fire(new TypeChangedEvent(this));
+  }
+
+  private void create() {
+    getSourcePath().getParent().toFile().mkdirs();
+    setText(getInitialText());
   }
 
   private String getInitialText() {
@@ -51,6 +92,7 @@ public class FileBasedType implements Type {
     } catch (IOException e) {
       throw new SourceSynchronizationException("Could not write text", e);
     }
+    compile();
   }
 
   @Override
@@ -67,8 +109,14 @@ public class FileBasedType implements Type {
   public Field addField(String name, FullyQualifiedName type) {
     Field result = new DefaultField(this, name, type);
     fields.add(result);
-    getProject().fire(new FieldAddedEvent(result));
+    fireEvent(new FieldAddedEvent(result));
     return result;
+  }
+
+  private void fireEvent(TypeChangedEvent event) {
+    if (!loading) {
+      getProject().fire(event);
+    }
   }
 
   @Override
@@ -80,18 +128,31 @@ public class FileBasedType implements Type {
   public Method addMethod(String name) {
     Method result = new DefaultMethod(this, name);
     methods.add(result);
-    getProject().fire(new MethodAddedEvent(result));
+    fireEvent(new MethodAddedEvent(result));
     return result;
-  }
-
-  @Override
-  public String toString() {
-    return name.toString();
   }
 
   @Override
   public List<Method> getMethods() {
     return Collections.unmodifiableList(methods);
+  }
+
+  @Override
+  public int hashCode() {
+    return name.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (other instanceof Type) {
+      return name.equals(((Type)other).getName());
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return name.toString();
   }
 
 }
