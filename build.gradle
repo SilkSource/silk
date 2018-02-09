@@ -8,57 +8,49 @@ buildscript {
   dependencies {
     classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6'
     classpath "net.serenity-bdd:serenity-gradle-plugin:$serenityVersion"
+    classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0'
   }
 }
 
-apply plugin: 'java'
-apply from: 'coverage.gradle'
-
-apply plugin: 'eclipse'
-eclipse.classpath {
-  defaultOutputDir = file('classes')
-  file.whenMerged { classpath ->
-    classpath.entries.findAll { 
-      it.kind == 'src' && it.output.startsWith('bin/') 
-    }.each {
-      it.output = it.output.replace('bin/', 'classes/')
+subprojects {
+  apply plugin: 'java'
+  apply from: rootProject.file('coverage.gradle')
+  
+  apply plugin: 'eclipse'
+  eclipse.classpath {
+    defaultOutputDir = file('classes')
+    file.whenMerged { classpath ->
+      classpath.entries.findAll { 
+        it.kind == 'src' && it.output.startsWith('bin/') 
+      }.each {
+        it.output = it.output.replace('bin/', 'classes/')
+      }
     }
   }
+  
+  apply plugin: 'net.serenity-bdd.aggregator'
+  check.dependsOn checkOutcomes
+  build.dependsOn aggregate
+  
+  task deleteTargetDir(type: Delete) {
+    delete file('target')
+  }
+  
+  task moveSerenityReportsToBuildDir(type: Copy) {
+    from file('target/site')
+    into reportsDir
+    mustRunAfter checkOutcomes
+    finalizedBy deleteTargetDir
+  }
+  
+  aggregate.finalizedBy moveSerenityReportsToBuildDir
+  
+  repositories {
+    jcenter()
+  }
 }
 
-apply plugin: 'net.serenity-bdd.aggregator'
-check.dependsOn checkOutcomes
-build.dependsOn aggregate
-
-task deleteTargetDir(type: Delete) {
-  delete file('target')
-}
-
-task moveSerenityReportsToBuildDir(type: Copy) {
-  from file('target/site')
-  into reportsDir
-  mustRunAfter checkOutcomes
-  finalizedBy deleteTargetDir
-}
-
-aggregate.finalizedBy moveSerenityReportsToBuildDir
-
-repositories {
-  jcenter()
-}
-
-dependencies {
-  compile "org.jacoco:org.jacoco.core:$jacocoVersion",
-    "org.junit.platform:junit-platform-launcher:$junit5Version",
-    "org.junit.vintage:junit-vintage-engine:$junit4Version",
-    'org.yaml:snakeyaml:1.19',
-    'commons-io:commons-io:2.6',
-    'org.eclipse.jdt:ecj:3.13.100',
-    'org.ow2.asm:asm:6.0'
-  testCompile "net.serenity-bdd:serenity-screenplay:$serenityVersion",
-      "net.serenity-bdd:serenity-junit:$serenityVersion"
-}
-
+apply from: 'publish.gradle'
 
 defaultTasks 'build'
 

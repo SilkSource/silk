@@ -21,6 +21,7 @@ public class Events {
    * Request notification when something interesting happens.
    * @param eventType the type of events that are interesting to the caller
    * @param handler callback that gets invoked whenever an event of the given type happens
+   * @param <T> the type of event
    */
   public <T> void listenFor(Class<T> eventType, Consumer<T> handler) {
     Objects.requireNonNull(eventType, "Missing event type");
@@ -31,6 +32,7 @@ public class Events {
   /**
    * Notify interested parties that an event occurred.
    * @param event the event that occurred
+   * @param <T> the type of event
    */
   @SuppressWarnings("unchecked")
   public <T> void fire(T event) {

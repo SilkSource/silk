@@ -1,1 +1,3 @@
-rootProject.name = 'silk'
+include 'continuous-testing'
+
+rootProject.name = 'Silk'
