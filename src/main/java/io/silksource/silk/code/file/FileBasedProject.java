@@ -14,6 +14,8 @@ import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.SourceSetNames;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.TypeChangedEvent;
+import io.silksource.silk.environment.Environment;
+import io.silksource.silk.environment.EnvironmentFactory;
 
 
 public class FileBasedProject implements Project {
@@ -21,6 +23,7 @@ public class FileBasedProject implements Project {
   private final List<SourceSet> sourceSets;
   private final Events events;
   private final Path root;
+  private final Environment environment;
 
   public FileBasedProject(File dir) {
     try {
@@ -28,6 +31,7 @@ public class FileBasedProject implements Project {
     } catch (IOException e) {
       throw new SourceSynchronizationException("Failed to canonicalize project dir: " + dir, e);
     }
+    this.environment = EnvironmentFactory.newInstance();
     this.events = new Events();
     events.listenFor(TypeChangedEvent.class, this::typeChanged);
     this.sourceSets = new ArrayList<>();
@@ -47,12 +51,12 @@ public class FileBasedProject implements Project {
 
   @Override
   public Path getSourcePath() {
-    return root.resolve("src");
+    return root.resolve(environment.getSourceDir());
   }
 
   @Override
   public Path getCompiledPath() {
-    return root.resolve("classes");
+    return root.resolve(environment.getCompiledDir());
   }
 
   @Override

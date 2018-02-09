@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -22,7 +21,6 @@ public class WhenTestingUsingJUnit {
   private final TestRunner testRunner = new JUnitTestRunner();
 
   @Test
-  @Ignore("TODO: Make this work outside Eclipse")
   public void shouldDiscoverTests() {
     Project project = new FileBasedProject(new File("."));
 
