@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.platform.engine.TestSource;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.engine.support.descriptor.ClassSource;
 import org.junit.platform.engine.support.descriptor.MethodSource;
@@ -22,7 +21,6 @@ import io.silksource.silk.code.api.Method;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.SourceSetNames;
-import io.silksource.silk.code.api.Type;
 
 
 public class JUnitTestRunner implements TestRunner {
@@ -51,29 +49,28 @@ public class JUnitTestRunner implements TestRunner {
 
   private Optional<Method> toMethod(SourceSet sourceSet, Collection<TestIdentifier> testIds,
       TestIdentifier testId) {
-    if (!testId.getSource().isPresent()) {
-      return Optional.empty();
-    }
-    TestSource source = testId.getSource().get();
-    if (!(source instanceof MethodSource)) {
-      return Optional.empty();
-    }
-    MethodSource methodSource = testId.getSource().map(MethodSource.class::cast).get();
-    Collection<TestIdentifier> parents = testIds.stream()
-        .filter(id -> id.getUniqueId().equals(id.getParentId().get()))
-        .collect(Collectors.toList());
-    String typeName = parents.stream()
+    return testId.getSource()
+        .filter(s -> s instanceof MethodSource)
+        .map(MethodSource.class::cast)
+        .flatMap(ms -> toMethod(sourceSet, testIds, testId.getParentId().get(), ms));
+  }
+
+  private Optional<Method> toMethod(SourceSet sourceSet, Collection<TestIdentifier> testIds,
+      String parentId, MethodSource methodSource) {
+    return sourceSet.type(typeOf(testIds, parentId, methodSource))
+        .flatMap(t -> t.method(methodSource.getMethodName()));
+  }
+
+  private FullyQualifiedName typeOf(Collection<TestIdentifier> testIds, String parentId,
+      MethodSource methodSource) {
+    return new FullyQualifiedName(testIds.stream()
+        .filter(id -> id.getUniqueId().equals(parentId))
         .map(TestIdentifier::getSource)
         .map(Optional::get)
         .map(ClassSource.class::cast)
         .map(ClassSource::getClassName)
         .findFirst()
-        .orElse(methodSource.getClassName());
-    Optional<Type> type = sourceSet.type(new FullyQualifiedName(typeName));
-    if (!type.isPresent()) {
-      return Optional.empty();
-    }
-    return type.get().method(methodSource.getMethodName());
+        .orElse(methodSource.getClassName()));
   }
 
 }

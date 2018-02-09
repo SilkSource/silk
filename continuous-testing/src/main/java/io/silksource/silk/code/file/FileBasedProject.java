@@ -46,7 +46,6 @@ public class FileBasedProject implements Project {
   private void compile(Type type) {
     // TODO: Compile the type to a .class file
     // Using Eclipse incremental Java compiler?
-    System.out.println("Compiling " + type.getName());
   }
 
   @Override

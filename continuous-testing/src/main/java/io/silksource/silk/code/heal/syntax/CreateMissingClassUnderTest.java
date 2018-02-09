@@ -1,10 +1,12 @@
 package io.silksource.silk.code.heal.syntax;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import io.silksource.silk.code.api.Events;
 import io.silksource.silk.code.api.Field;
 import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.SourceSet;
 import io.silksource.silk.code.api.SourceSetNames;
 import io.silksource.silk.code.api.Type;
 import io.silksource.silk.code.event.FieldAddedEvent;
@@ -26,8 +28,12 @@ public class CreateMissingClassUnderTest implements CodeHealer {
     Type ownerType = event.getType();
     FullyQualifiedName fieldType = field.getType();
     if (isReferenceToClassUnderTest(ownerType, fieldType)) {
-      ownerType.getProject().sourceSet(SourceSetNames.MAIN).get().addType(fieldType);
+      mainSourceSet(ownerType).ifPresent(sourceSet -> sourceSet.addType(fieldType));
     }
+  }
+
+  private Optional<SourceSet> mainSourceSet(Type ownerType) {
+    return ownerType.getProject().sourceSet(SourceSetNames.MAIN);
   }
 
   private boolean isReferenceToClassUnderTest(Type ownerType, FullyQualifiedName fieldType) {
