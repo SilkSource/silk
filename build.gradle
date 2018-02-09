@@ -12,6 +12,8 @@ buildscript {
   }
 }
 
+apply plugin: 'eclipse'
+
 subprojects {
   apply plugin: 'java'
   apply from: rootProject.file('coverage.gradle')
