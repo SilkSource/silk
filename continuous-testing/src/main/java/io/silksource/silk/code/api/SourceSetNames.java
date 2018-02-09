@@ -1,19 +1,28 @@
 package io.silksource.silk.code.api;
 
+import java.util.Locale;
+
 
 /**
  * Names for standard {@linkplain SourceSet}s.
  */
-public interface SourceSetNames {
+public enum SourceSetNames {
 
   /**
    * The name of the {@linkplain SourceSet} containing production code.
    */
-  String MAIN = "main";
+  MAIN,
 
   /**
    * The name of the {@linkplain SourceSet} containing test code.
    */
-  String TEST = "test";
+  TEST;
+
+  @Override
+  public String toString() {
+    return super.toString().toLowerCase(Locale.ENGLISH);
+  }
+
+
 
 }

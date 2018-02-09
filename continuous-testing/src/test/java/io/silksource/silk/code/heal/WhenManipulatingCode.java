@@ -44,7 +44,7 @@ public abstract class WhenManipulatingCode {
   @Test
   public void shouldCreateAClass() {
     String type = "com.foo.Bar";
-    SourceSet sourceSet = project.sourceSet(SourceSetNames.MAIN).get();
+    SourceSet sourceSet = project.sourceSet(SourceSetNames.MAIN.toString()).get();
     sourceSet.addType(new FullyQualifiedName(type));
 
     assertThat("Type added", sourceSet.getTypes().stream()
@@ -58,7 +58,7 @@ public abstract class WhenManipulatingCode {
     String typeName = "Baz";
     String fieldName = "gnu";
     String fieldType = "Gnu";
-    SourceSet sourceSet = project.sourceSet(SourceSetNames.TEST).get();
+    SourceSet sourceSet = project.sourceSet(SourceSetNames.TEST.toString()).get();
     Type type = sourceSet.addType(new FullyQualifiedName(typeName));
 
     type.addField(fieldName, sourceSet.addType(new FullyQualifiedName(fieldType)).getName());

@@ -20,7 +20,7 @@ public class AddAField implements Task {
   @Step("{0} adds the field '#fieldName' of type '#fieldType' to class '#typeName'")
   public <T extends Actor> void performAs(T actor) {
     WriteCode.as(actor)
-        .sourceSet(SourceSetNames.TEST)
+        .sourceSet(SourceSetNames.TEST.toString())
         .get()
         .type(new FullyQualifiedName(typeName))
         .get()

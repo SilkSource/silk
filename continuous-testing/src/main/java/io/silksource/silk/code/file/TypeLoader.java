@@ -1,7 +1,6 @@
 package io.silksource.silk.code.file;
 
 import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -16,11 +15,6 @@ public class TypeLoader extends ClassVisitor {
   public TypeLoader(Type type) {
     super(Opcodes.ASM5);
     this.type = type;
-  }
-
-  @Override
-  public FieldVisitor visitField(int access, String name, String description, String signature, Object value) {
-    return super.visitField(access, name, description, signature, value);
   }
 
   @Override

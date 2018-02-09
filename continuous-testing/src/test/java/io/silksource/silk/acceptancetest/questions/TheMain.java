@@ -16,7 +16,7 @@ public class TheMain implements Question<List<String>> {
   @Subject("the main classes")
   public List<String> answeredBy(Actor actor) {
     return WriteCode.as(actor)
-        .sourceSet(SourceSetNames.MAIN)
+        .sourceSet(SourceSetNames.MAIN.toString())
         .get()
         .getTypes().stream()
         .map(t -> t.getName().toString())

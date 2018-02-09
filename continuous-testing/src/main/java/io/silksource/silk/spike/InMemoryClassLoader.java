@@ -3,9 +3,10 @@ package io.silksource.silk.spike;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class InMemoryClassLoader extends ClassLoader {
 
-  private final Map<String, byte[]> definitions = new HashMap<String, byte[]>();
+  private final Map<String, byte[]> definitions = new HashMap<>();
 
   /**
    * Add a in-memory representation of a class.

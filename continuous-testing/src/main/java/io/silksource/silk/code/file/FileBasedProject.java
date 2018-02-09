@@ -35,8 +35,8 @@ public class FileBasedProject implements Project {
     this.events = new Events();
     events.listenFor(TypeChangedEvent.class, this::typeChanged);
     this.sourceSets = new ArrayList<>();
-    addSourceSet(SourceSetNames.MAIN);
-    addSourceSet(SourceSetNames.TEST);
+    addSourceSet(SourceSetNames.MAIN.toString());
+    addSourceSet(SourceSetNames.TEST.toString());
   }
 
   private void typeChanged(TypeChangedEvent event) {

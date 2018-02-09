@@ -29,7 +29,7 @@ public class JUnitTestRunner implements TestRunner {
 
   @Override
   public Set<Method> findTestMethodsIn(Project project) {
-    Optional<SourceSet> testSources = project.sourceSet(SourceSetNames.TEST);
+    Optional<SourceSet> testSources = project.sourceSet(SourceSetNames.TEST.toString());
     if (!testSources.isPresent()) {
       return Collections.emptySet();
     }

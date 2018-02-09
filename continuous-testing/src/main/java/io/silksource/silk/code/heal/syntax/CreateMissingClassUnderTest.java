@@ -33,7 +33,7 @@ public class CreateMissingClassUnderTest implements CodeHealer {
   }
 
   private Optional<SourceSet> mainSourceSet(Type ownerType) {
-    return ownerType.getProject().sourceSet(SourceSetNames.MAIN);
+    return ownerType.getProject().sourceSet(SourceSetNames.MAIN.toString());
   }
 
   private boolean isReferenceToClassUnderTest(Type ownerType, FullyQualifiedName fieldType) {

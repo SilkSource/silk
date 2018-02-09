@@ -6,7 +6,11 @@ import java.util.Locale;
 /**
  * Factory for creating an {@linkplain Environment}.
  */
-public class EnvironmentFactory {
+public final class EnvironmentFactory {
+
+  private EnvironmentFactory() {
+    // Utility class
+  }
 
   public static Environment newInstance() {
     String startUpCommand = System.getProperty("sun.java.command", "").toLowerCase(Locale.ENGLISH);

@@ -18,7 +18,7 @@ public class CreateATest implements Task {
   @Step("{0} adds the test class '#testName'")
   public <T extends Actor> void performAs(T actor) {
     WriteCode.as(actor)
-        .sourceSet(SourceSetNames.TEST)
+        .sourceSet(SourceSetNames.TEST.toString())
         .get()
         .addType(new FullyQualifiedName(testName));
   }

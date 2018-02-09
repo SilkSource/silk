@@ -57,10 +57,10 @@ public class FileBasedType implements Type {
   }
 
   private void load() {
-    if (Files.exists(getCompiledPath())) {
+    if (getCompiledPath().toFile().exists()) {
       loadCompiled();
     } else {
-      if (Files.exists(getSourcePath())) {
+      if (getSourcePath().toFile().exists()) {
         compile();
       } else {
         create();

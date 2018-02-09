@@ -1,6 +1,5 @@
 package io.silksource.silk.code.api;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 
@@ -22,7 +21,7 @@ public interface FileBased {
   Path getCompiledPath();
 
   default boolean exists() {
-    return Files.exists(getSourcePath());
+    return getSourcePath().toFile().exists();
   }
 
 }
