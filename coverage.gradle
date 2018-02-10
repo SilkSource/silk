@@ -4,12 +4,32 @@ jacoco {
   toolVersion = jacocoVersion
 }
 
+def has(sourceSet) {
+  !sourceSet.allJava.files.empty
+}
+
+task testsExistVerification {
+  doLast {
+    if (has(project.sourceSets.main) && !has(project.sourceSets.test)) {
+      throw new GradleException("Project '$project.name' contains code, but no tests at all")
+    }
+  }
+}
+
 def excludeSpikesFrom(files) {
   project.files(files.collect { dir ->
     fileTree(dir) {
       exclude '**/spike/*'
     }
   })
+}
+
+def initCap(text) {
+  text.toLowerCase().capitalize()
+}
+
+def getCoverageMinimumFor(limit) {
+  new BigDecimal(project.getProperty("min${initCap(limit.counter)}Coverage"))
 }
 
 jacocoTestCoverageVerification {
@@ -22,18 +42,19 @@ jacocoTestCoverageVerification {
       rule {
         limit {
           counter = 'LINE'
-              minimum = 0.8
         }
         limit {
           counter = 'COMPLEXITY'
-              minimum = 0.8
         }
         limit {
           counter = 'BRANCH'
-              minimum = 0.5
+        }
+        limits.each { limit ->
+          limit.minimum = getCoverageMinimumFor(limit)
         }
       }
     }
+    finalizedBy testsExistVerification
   }
 }
 
