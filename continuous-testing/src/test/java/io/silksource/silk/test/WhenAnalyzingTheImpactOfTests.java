@@ -5,16 +5,16 @@ package io.silksource.silk.test;
 
 import static org.junit.Assert.assertEquals;
 
-import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
+import static io.silksource.silk.testdata.FullyQualifiedNameBuilder.someFullyQualifiedName;
 
 import java.util.Arrays;
 import java.util.TreeSet;
 
 import org.junit.Test;
 
-import io.silksource.silk.code.api.FullyQualifiedName;
-import io.silksource.silk.test.ct.InMemoryTestImpactMap;
-import io.silksource.silk.test.ct.TestImpactMap;
+import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.testing.continuous.InMemoryTestImpactMap;
+import io.silksource.silk.testing.continuous.TestImpactMap;
 
 
 public class WhenAnalyzingTheImpactOfTests {

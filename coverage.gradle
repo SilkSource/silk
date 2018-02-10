@@ -17,19 +17,21 @@ jacocoTestCoverageVerification {
     classDirectories = excludeSpikesFrom(classDirectories)
     sourceDirectories = excludeSpikesFrom(sourceDirectories)
   }
-  violationRules {
-    rule {
-      limit {
-        counter = 'LINE'
-            minimum = 0.8
-      }
-      limit {
-        counter = 'COMPLEXITY'
-            minimum = 0.8
-      }
-      limit {
-        counter = 'BRANCH'
-            minimum = 0.67
+  if (!project.name.startsWith('internal') && !project.hasProperty('beta')) {
+    violationRules {
+      rule {
+        limit {
+          counter = 'LINE'
+              minimum = 0.8
+        }
+        limit {
+          counter = 'COMPLEXITY'
+              minimum = 0.8
+        }
+        limit {
+          counter = 'BRANCH'
+              minimum = 0.5
+        }
       }
     }
   }

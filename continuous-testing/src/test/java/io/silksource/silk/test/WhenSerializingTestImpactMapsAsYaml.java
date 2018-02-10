@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
+import static io.silksource.silk.testdata.FullyQualifiedNameBuilder.someFullyQualifiedName;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
-import io.silksource.silk.code.api.FullyQualifiedName;
-import io.silksource.silk.test.ct.SerializeTestImpactMapToYaml;
-import io.silksource.silk.test.ct.TestImpactMap;
+import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.testing.continuous.SerializeTestImpactMapToYaml;
+import io.silksource.silk.testing.continuous.TestImpactMap;
 
 
 @SuppressWarnings("unchecked")

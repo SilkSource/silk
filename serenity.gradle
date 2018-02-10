@@ -1,0 +1,18 @@
+apply plugin: 'net.serenity-bdd.aggregator'
+
+test.finalizedBy checkOutcomes, aggregate
+
+
+task deleteTargetDir(type: Delete) {
+  delete file('target')
+}
+clean.finalizedBy deleteTargetDir
+
+
+task moveSerenityReportsToBuildDir(type: Copy) {
+  from file('target/site')
+  into reportsDir
+  mustRunAfter checkOutcomes
+  finalizedBy deleteTargetDir
+}
+aggregate.finalizedBy moveSerenityReportsToBuildDir

@@ -12,107 +12,58 @@ buildscript {
   }
 }
 
+apply plugin: 'java'
 apply plugin: 'eclipse'
 
+
 subprojects {
-  apply plugin: 'java'
+  apply from: rootProject.file('java.gradle')
+  apply from: rootProject.file('codestyle.gradle')
   apply from: rootProject.file('coverage.gradle')
+  apply from: rootProject.file('serenity.gradle')
   
   apply plugin: 'eclipse'
   eclipse.classpath {
     defaultOutputDir = file('classes')
     file.whenMerged { classpath ->
-      classpath.entries.findAll { 
-        it.kind == 'src' && it.output.startsWith('bin/') 
-      }.each {
-        it.output = it.output.replace('bin/', 'classes/')
+      classpath.entries.findAll { entry -> 
+        entry.kind == 'src' && entry.path.contains('src') && entry.output.startsWith('bin/') 
+      }.each { entry ->
+        entry.output = entry.output.replace('bin/', 'classes/')
       }
     }
   }
   
-  apply plugin: 'net.serenity-bdd.aggregator'
-  check.dependsOn checkOutcomes
-  build.dependsOn aggregate
-  
-  task deleteTargetDir(type: Delete) {
-    delete file('target')
-  }
-  
-  task moveSerenityReportsToBuildDir(type: Copy) {
-    from file('target/site')
-    into reportsDir
-    mustRunAfter checkOutcomes
-    finalizedBy deleteTargetDir
-  }
-  
-  aggregate.finalizedBy moveSerenityReportsToBuildDir
-  
-  tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
-  }
-  
-  javadoc {
-    def events = []
-    StandardOutputListener listener = { event -> events << event }
-    doFirst {
-      logging.addStandardOutputListener(listener)
-    }
-    doLast {
-      logging.removeStandardOutputListener(listener)
-      if (events.find { it.toString() =~ /warning/ }) {
-        throw new GradleException("Warnings in Javadoc, see output above");
-      }
-    }
-  }
-
-  // Need all test info on command-line for TravisCI
-  test {
-    testLogging {
-      events "failed"
-      showStandardStreams = true
-      showStackTraces = true
-      exceptionFormat "full"
-    }
-    outputs.upToDateWhen { false } // Always run tests so that we have a test report on each build
-  }
-
-  apply plugin: 'checkstyle'
-  checkstyle {
-    configFile = rootProject.file('config/checkstyle.xml')
-    toolVersion = '8.1'
-    ignoreFailures = false
-  }
-
-  // Despite ignoreFailures=false, the build won't by default fail on CheckStyle warnings
-  // https://issues.gradle.org/browse/GRADLE-2888
-  tasks.withType(Checkstyle).each { checkstyleTask ->
-    checkstyleTask.doLast {
-      reports.all { report ->
-        def outputFile = report.destination
-        if (outputFile.exists() && outputFile.text.contains("<error ")) {
-          throw new GradleException("Found checkstyle issues in $outputFile")
-        }
-      }
-    }
-  }
-
-  apply plugin: 'pmd'
-  pmd {
-    ruleSetFiles = rootProject.files('config/pmd.xml')
-    toolVersion = '5.4.1'
-    ignoreFailures = false
-  }
-
-  apply plugin: 'findbugs'
-  findbugs {
-    toolVersion = '3.0.1'
-    excludeFilter = rootProject.file('config/findbugs_filter.xml')
-    ignoreFailures = false
-  }
-
   repositories {
-    jcenter()
+    mavenCentral()
   }
+  
+  configurations {
+    asm
+    commonsIo
+    ecj
+    jaCoCo  
+    junit
+    mockito
+    serenityBdd
+    snakeYaml
+    
+    testCompile.extendsFrom junit, mockito
+  }
+  
+  dependencies {
+    asm "org.ow2.asm:asm:$asmVersion"
+    commonsIo "commons-io:commons-io:$commonsIoVersion"
+    ecj "org.eclipse.jdt:ecj:$ecjVersion"
+    jaCoCo "org.jacoco:org.jacoco.core:$jacocoVersion"
+    junit "org.junit.platform:junit-platform-launcher:$junit5Version",
+        "org.junit.vintage:junit-vintage-engine:$junit4Version"
+    mockito "org.mockito:mockito-core:$mockitoVersion"
+    serenityBdd "net.serenity-bdd:serenity-screenplay:$serenityVersion",
+      "net.serenity-bdd:serenity-junit:$serenityVersion"
+    snakeYaml "org.yaml:snakeyaml:$snakeYamlVersion"
+  }
+  
 }
 
 apply from: 'publish.gradle'
@@ -125,4 +76,51 @@ if (project.hasProperty('sonarToken')) {
   System.setProperty('sonar.login', sonarToken)
   apply plugin: 'org.sonarqube'
   check.dependsOn 'sonarqube'
+}
+
+
+
+project(':internal-testing') {
+  dependencies {
+    testCompile project(':coding')
+  }
+}
+
+
+
+project(':coding') {
+  configurations {
+    compile.extendsFrom asm, commonsIo, ecj
+  }
+}
+
+
+
+project(':auto-coding') {
+  dependencies {
+    compile project(':coding')
+  }  
+}
+
+
+
+project(':continuous-testing') {
+  configurations {
+    compile.extendsFrom jaCoCo, junit, snakeYaml
+  }
+
+  dependencies {
+    compile project(':coding'), project(':internal-testing').sourceSets.test.output
+  }
+}
+
+
+
+project(':internal-spike') {
+  configurations {
+    compile.extendsFrom jaCoCo, junit
+  }
+  dependencies {
+    compile project(':coding'), project(':auto-coding')
+  }
 }

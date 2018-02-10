@@ -1,3 +1,7 @@
+include 'coding'
 include 'continuous-testing'
+include 'auto-coding'
+include 'internal-testing'
+include 'internal-spike'
 
 rootProject.name = 'Silk'

@@ -12,9 +12,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import io.silksource.silk.code.api.Method;
-import io.silksource.silk.code.api.Project;
-import io.silksource.silk.code.file.FileBasedProject;
+import io.silksource.silk.coding.api.Method;
+import io.silksource.silk.coding.api.Project;
+import io.silksource.silk.coding.file.FileBasedProject;
+import io.silksource.silk.testing.TestRunner;
+import io.silksource.silk.testing.junit.JUnitTestRunner;
 
 
 public class WhenTestingUsingJUnit {

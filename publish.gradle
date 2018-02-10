@@ -2,7 +2,10 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'io.codearte.nexus-staging'
 
-ext.publishProjects = subprojects.findAll { !it.hasProperty('beta') }
+ext.publishProjects = subprojects.findAll { 
+  !it.name.startsWith('internal') && 
+  !it.hasProperty('beta') 
+}
 
 // OSSRH requires both javadoc and sources jars
 publishProjects.each { prj ->
