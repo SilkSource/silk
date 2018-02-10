@@ -3,6 +3,7 @@
  */
 package io.silksource.silk.code.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
@@ -80,7 +81,7 @@ public class FileBasedType implements Type {
   private void create() {
     Optional.ofNullable(getSourcePath().getParent())
         .map(Path::toFile)
-        .ifPresent(dir -> dir.mkdirs());
+        .ifPresent(File::mkdirs);
     setText(getInitialText());
   }
 
