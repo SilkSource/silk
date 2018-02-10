@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.spike;
 
 import java.io.File;
@@ -77,6 +80,7 @@ public class JUnitSpike {
     return id.getDisplayName();
   }
 
+  @SuppressWarnings("PMD.SystemPrintln")
   private void print(TestIdentifier id, TestExecutionResult result) {
     System.out.println(String.format("%s%n  => %s", getMethod(id), result.getStatus()));
   }

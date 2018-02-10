@@ -1,11 +1,18 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.heal.syntax;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.GivenWhenThen.then;
 import static net.serenitybdd.screenplay.GivenWhenThen.when;
+
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
+
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.screenplay.Actor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +26,14 @@ import io.silksource.silk.acceptancetest.tasks.AddAField;
 import io.silksource.silk.acceptancetest.tasks.CreateATest;
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.code.file.FileBasedProject;
-import net.serenitybdd.junit.runners.SerenityRunner;
-import net.serenitybdd.screenplay.Actor;
 
 
 @RunWith(SerenityRunner.class)
 public class WhenReferringToTheClassUnderTest {
+
+  private static final String TEST_CLASS_NAME = "SetTest";
+  private static final String CLASS_UNDER_TEST_NAME = "Set";
+  private static final String RANDOM_CLASS_NAME = "Foo";
 
   private final Actor dave = Actor.named("Dave");
   private final Project hisProject = new FileBasedProject(Files.createTempDir());
@@ -36,16 +45,16 @@ public class WhenReferringToTheClassUnderTest {
 
   @Test
   public void referringToTheClassUnderTestShouldCreateThatClass() {
-    givenThat(dave).wasAbleTo(CreateATest.named("SetTest"));
-    when(dave).attemptsTo(AddAField.named("set").ofType("Set").to("SetTest"));
-    then(dave).should(seeThat(TheMain.classes(), hasItem("Set")));
+    givenThat(dave).wasAbleTo(CreateATest.named(TEST_CLASS_NAME));
+    when(dave).attemptsTo(AddAField.named("set").ofType(CLASS_UNDER_TEST_NAME).to(TEST_CLASS_NAME));
+    then(dave).should(seeThat(TheMain.classes(), hasItem(CLASS_UNDER_TEST_NAME)));
   }
 
   @Test
   public void referringToSomethingOtherThanTheClassUnderTestShouldNotCreateThatClass() {
-    givenThat(dave).wasAbleTo(CreateATest.named("SetTest"));
-    when(dave).attemptsTo(AddAField.named("set").ofType("Foo").to("SetTest"));
-    then(dave).should(seeThat(TheMain.classes(), not(hasItem("Foo"))));
+    givenThat(dave).wasAbleTo(CreateATest.named(TEST_CLASS_NAME));
+    when(dave).attemptsTo(AddAField.named("set").ofType(RANDOM_CLASS_NAME).to(TEST_CLASS_NAME));
+    then(dave).should(seeThat(TheMain.classes(), not(hasItem(RANDOM_CLASS_NAME))));
   }
 
 }

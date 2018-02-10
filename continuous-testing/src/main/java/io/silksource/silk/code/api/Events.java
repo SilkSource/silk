@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.api;
 
 import java.util.ArrayList;

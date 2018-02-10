@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.heal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -43,9 +46,9 @@ public abstract class WhenManipulatingCode {
 
   @Test
   public void shouldCreateAClass() {
-    String type = "com.foo.Bar";
+    FullyQualifiedName type = new FullyQualifiedName("com.foo.Bar");
     SourceSet sourceSet = project.sourceSet(SourceSetNames.MAIN.toString()).get();
-    sourceSet.addType(new FullyQualifiedName(type));
+    sourceSet.addType(type);
 
     assertThat("Type added", sourceSet.getTypes().stream()
         .map(t -> t.getName()).collect(Collectors.toList()), hasItem(type));

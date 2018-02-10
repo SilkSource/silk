@@ -47,6 +47,69 @@ subprojects {
   
   aggregate.finalizedBy moveSerenityReportsToBuildDir
   
+  tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
+  }
+  
+  javadoc {
+    def events = []
+    StandardOutputListener listener = { event -> events << event }
+    doFirst {
+      logging.addStandardOutputListener(listener)
+    }
+    doLast {
+      logging.removeStandardOutputListener(listener)
+      if (events.find { it.toString() =~ /warning/ }) {
+        throw new GradleException("Warnings in Javadoc, see output above");
+      }
+    }
+  }
+
+  // Need all test info on command-line for TravisCI
+  test {
+    testLogging {
+      events "failed"
+      showStandardStreams = true
+      showStackTraces = true
+      exceptionFormat "full"
+    }
+    outputs.upToDateWhen { false } // Always run tests so that we have a test report on each build
+  }
+
+  apply plugin: 'checkstyle'
+  checkstyle {
+    configFile = rootProject.file('config/checkstyle.xml')
+    toolVersion = '8.1'
+    ignoreFailures = false
+  }
+
+  // Despite ignoreFailures=false, the build won't by default fail on CheckStyle warnings
+  // https://issues.gradle.org/browse/GRADLE-2888
+  tasks.withType(Checkstyle).each { checkstyleTask ->
+    checkstyleTask.doLast {
+      reports.all { report ->
+        def outputFile = report.destination
+        if (outputFile.exists() && outputFile.text.contains("<error ")) {
+          throw new GradleException("Found checkstyle issues in $outputFile")
+        }
+      }
+    }
+  }
+
+  apply plugin: 'pmd'
+  pmd {
+    ruleSetFiles = rootProject.files('config/pmd.xml')
+    toolVersion = '5.4.1'
+    ignoreFailures = false
+  }
+
+  apply plugin: 'findbugs'
+  findbugs {
+    toolVersion = '3.0.1'
+    excludeFilter = rootProject.file('config/findbugs_filter.xml')
+    ignoreFailures = false
+  }
+
   repositories {
     jcenter()
   }

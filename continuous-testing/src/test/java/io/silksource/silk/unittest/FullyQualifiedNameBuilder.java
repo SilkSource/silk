@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.unittest;
 
 import static io.silksource.silk.unittest.IdentifierBuilder.someIdentifier;
@@ -26,13 +29,13 @@ public class FullyQualifiedNameBuilder {
     return new FullyQualifiedName(somePackage(), identifier);
   }
 
-  public FullyQualifiedNameBuilder withPackage(FullyQualifiedName parent) {
-    this.parent = parent;
+  public FullyQualifiedNameBuilder withPackage(FullyQualifiedName newParent) {
+    this.parent = newParent;
     return this;
   }
 
-  public FullyQualifiedNameBuilder withName(String name) {
-    this.name = name;
+  public FullyQualifiedNameBuilder withName(String newName) {
+    this.name = newName;
     return this;
   }
 

@@ -1,7 +1,11 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.test;
 
-import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
 import static org.junit.Assert.assertEquals;
+
+import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
 
 import java.util.Arrays;
 import java.util.TreeSet;

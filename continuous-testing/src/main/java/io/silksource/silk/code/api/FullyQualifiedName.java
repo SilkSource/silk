@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.api;
 
 import java.util.Objects;
@@ -54,9 +57,6 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
     if (obj instanceof FullyQualifiedName) {
       FullyQualifiedName other = (FullyQualifiedName)obj;
       return name.equals(other.name);
-    }
-    if (obj instanceof String) {
-      return toString().equals(obj);
     }
     return false;
   }

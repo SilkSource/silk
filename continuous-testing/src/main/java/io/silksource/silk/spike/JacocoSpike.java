@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.spike;
 
 import java.io.File;
@@ -28,12 +31,12 @@ import io.silksource.silk.code.heal.syntax.CreateMissingClassUnderTest;
 
 public class JacocoSpike {
 
+  @SuppressWarnings("PMD.AvoidPrintStackTrace")
   public static void main(String[] args) {
     try {
       new JacocoSpike().run();
     } catch (Exception e) {
       e.printStackTrace();
-      System.exit(1);
     }
   }
 
@@ -68,9 +71,9 @@ public class JacocoSpike {
     try (InputStream classBytes = getClassBytes(targetClassName)) {
       analyzer.analyzeClass(classBytes, targetClassName);
     }
-    coverageBuilder.getSourceFiles().forEach(System.out::println);
+    coverageBuilder.getSourceFiles().forEach(this::logLine);
     for (final IClassCoverage cc : coverageBuilder.getClasses()) {
-      System.out.printf("Coverage of class %s%n", cc.getName());
+      log("Coverage of class %s%n", cc.getName());
 
       printCounter("instructions", cc.getInstructionCounter());
       printCounter("branches", cc.getBranchCounter());
@@ -79,28 +82,39 @@ public class JacocoSpike {
       printCounter("complexity", cc.getComplexityCounter());
 
       for (int i = cc.getFirstLine(); i <= cc.getLastLine(); i++) {
-        System.out.printf("Line %s: %s%n", Integer.valueOf(i),
+        log("Line %s: %s%n", Integer.valueOf(i),
             getColor(cc.getLine(i).getStatus()));
       }
     }
   }
 
+  @SuppressWarnings("PMD.SystemPrintln")
+  private void logLine(Object message) {
+    System.out.println(message);
+  }
+
+  @SuppressWarnings("PMD.SystemPrintln")
+  private void log(String format, Object... args) {
+    System.out.printf(format, args);
+  }
+
   private void printCounter(final String unit, final ICounter counter) {
     final Integer missed = Integer.valueOf(counter.getMissedCount());
     final Integer total = Integer.valueOf(counter.getTotalCount());
-    System.out.printf("%s of %s %s missed%n", missed, total, unit);
+    log("%s of %s %s missed%n", missed, total, unit);
   }
 
   private String getColor(final int status) {
     switch (status) {
-    case ICounter.NOT_COVERED:
-      return "red";
-    case ICounter.PARTLY_COVERED:
-      return "yellow";
-    case ICounter.FULLY_COVERED:
-      return "green";
+      case ICounter.NOT_COVERED:
+        return "red";
+      case ICounter.PARTLY_COVERED:
+        return "yellow";
+      case ICounter.FULLY_COVERED:
+        return "green";
+      default:
+        return "";
     }
-    return "";
   }
 
 

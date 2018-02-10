@@ -1,9 +1,13 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.acceptancetest.abilities;
+
+import net.serenitybdd.screenplay.Ability;
+import net.serenitybdd.screenplay.Actor;
 
 import io.silksource.silk.code.api.Project;
 import io.silksource.silk.core.Silk;
-import net.serenitybdd.screenplay.Ability;
-import net.serenitybdd.screenplay.Actor;
 
 
 public class WriteCode implements Ability {

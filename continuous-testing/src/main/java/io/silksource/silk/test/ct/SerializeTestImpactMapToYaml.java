@@ -1,8 +1,13 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.test.ct;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -27,7 +32,8 @@ public class SerializeTestImpactMapToYaml {
         map.put(source.toString(), new ArrayList<>(testImpactMap.testsTouching(source).stream()
           .map(FullyQualifiedName::toString)
           .collect(Collectors.toSet()))));
-    try (PrintWriter writer = new PrintWriter(output)) {
+    try (PrintWriter writer = new PrintWriter(
+        new OutputStreamWriter(output, StandardCharsets.UTF_8))) {
       writer.println(new Yaml(dumperOptions()).dump(map));
     }
   }

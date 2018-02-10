@@ -1,11 +1,15 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.test;
 
-import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import static io.silksource.silk.unittest.FullyQualifiedNameBuilder.someFullyQualifiedName;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -55,8 +59,8 @@ public class WhenSerializingTestImpactMapsAsYaml {
     }
   }
 
-  private TreeSet<String> asSet(Map<String, Collection<String>> map, FullyQualifiedName name) {
-    return new TreeSet<>(map.get(name.toString()));
+  private SortedSet<String> asSet(Map<String, Collection<String>> map, FullyQualifiedName name) {
+    return new TreeSet<String>(map.get(name.toString()));
   }
 
   private SortedSet<FullyQualifiedName> setOf(FullyQualifiedName... names) {

@@ -1,13 +1,18 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.file;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.objectweb.asm.ClassReader;
 
@@ -73,7 +78,9 @@ public class FileBasedType implements Type {
   }
 
   private void create() {
-    getSourcePath().getParent().toFile().mkdirs();
+    Optional.ofNullable(getSourcePath().getParent())
+        .map(Path::toFile)
+        .ifPresent(dir -> dir.mkdirs());
     setText(getInitialText());
   }
 
@@ -82,7 +89,7 @@ public class FileBasedType implements Type {
     name.getParent().ifPresent(parent ->
         result.append("package ").append(parent).append(';').append(NL).append(NL));
     result.append("public class ").append(name.getSimpleName()).append(" {").append(NL)
-        .append("}").append(NL);
+        .append('}').append(NL);
     return result.toString();
   }
 
@@ -106,8 +113,8 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public Field addField(String name, FullyQualifiedName type) {
-    Field result = new DefaultField(this, name, type);
+  public Field addField(String fieldName, FullyQualifiedName type) {
+    Field result = new DefaultField(this, fieldName, type);
     fields.add(result);
     fireEvent(new FieldAddedEvent(result));
     return result;
@@ -125,8 +132,8 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public Method addMethod(String name) {
-    Method result = new DefaultMethod(this, name);
+  public Method addMethod(String methodName) {
+    Method result = new DefaultMethod(this, methodName);
     methods.add(result);
     fireEvent(new MethodAddedEvent(result));
     return result;

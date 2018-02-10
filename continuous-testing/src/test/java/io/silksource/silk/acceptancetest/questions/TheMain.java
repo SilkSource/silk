@@ -1,13 +1,17 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.acceptancetest.questions;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.silksource.silk.acceptancetest.abilities.WriteCode;
-import io.silksource.silk.code.api.SourceSetNames;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.annotations.Subject;
+
+import io.silksource.silk.acceptancetest.abilities.WriteCode;
+import io.silksource.silk.code.api.SourceSetNames;
 
 
 public class TheMain implements Question<List<String>> {

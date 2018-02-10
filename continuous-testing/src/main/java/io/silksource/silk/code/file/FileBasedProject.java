@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.code.file;
 
 import java.io.File;
@@ -73,7 +76,7 @@ public class FileBasedProject implements Project {
   }
 
   @Override
-  public SourceSet addSourceSet(String name) {
+  public final SourceSet addSourceSet(String name) {
     SourceSet result = new FileBasedSourceSet(this, name);
     sourceSets.add(result);
     return result;

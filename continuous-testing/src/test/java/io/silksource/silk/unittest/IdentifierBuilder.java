@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.unittest;
 
 import java.util.Random;
@@ -20,10 +23,10 @@ public class IdentifierBuilder {
   private final Random random = new Random();
   private int length = MIN_DEFAULT_LENGTH
       + random.nextInt(MAX_DEFAULT_LENGTH - MIN_DEFAULT_LENGTH + 1);
-  private boolean type = false;
+  private boolean type;
 
-  public IdentifierBuilder ofLength(int length) {
-    this.length = length - 1;
+  public IdentifierBuilder ofLength(int newLength) {
+    this.length = newLength - 1;
     return this;
   }
 

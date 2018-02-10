@@ -1,13 +1,17 @@
+/*
+ * Copyright (c) 2018 SilkSource.
+ */
 package io.silksource.silk.acceptancetest.tasks;
 
-import io.silksource.silk.acceptancetest.abilities.WriteCode;
-import io.silksource.silk.code.api.FullyQualifiedName;
-import io.silksource.silk.code.api.SourceSetNames;
 import net.serenitybdd.core.steps.Instrumented;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.thucydides.core.annotations.Step;
+
+import io.silksource.silk.acceptancetest.abilities.WriteCode;
+import io.silksource.silk.code.api.FullyQualifiedName;
+import io.silksource.silk.code.api.SourceSetNames;
 
 
 public class CreateATest implements Task {
