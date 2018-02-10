@@ -12,7 +12,6 @@ buildscript {
   }
 }
 
-apply plugin: 'java'
 apply plugin: 'eclipse'
 
 
@@ -20,7 +19,6 @@ subprojects {
   apply from: rootProject.file('java.gradle')
   apply from: rootProject.file('codestyle.gradle')
   apply from: rootProject.file('coverage.gradle')
-  apply from: rootProject.file('serenity.gradle')
   
   apply plugin: 'eclipse'
   eclipse.classpath {
@@ -31,7 +29,16 @@ subprojects {
       }.each { entry ->
         entry.output = entry.output.replace('bin/', 'classes/')
       }
+      classpath.entries -= classpath.entries.findAll { entry -> 
+        entry.kind == 'lib' && !file(entry.path).exists() 
+      }
     }
+  }
+  rootProject.subprojects.collect { ":$it.name:compileTestJava" }.each { taskName ->
+    tasks.eclipseClasspath.dependsOn taskName
+  }
+  rootProject.subprojects.collect { ":$it.name:clean" }.each { taskName ->
+    tasks.eclipseClasspath.mustRunAfter taskName
   }
   
   repositories {
@@ -110,7 +117,8 @@ project(':continuous-testing') {
   }
 
   dependencies {
-    compile project(':coding'), project(':internal-testing').sourceSets.test.output
+    compile project(':coding'), 
+        project(':internal-testing').sourceSets.test.output
   }
 }
 
