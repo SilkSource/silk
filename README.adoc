@@ -5,7 +5,7 @@ image:https://sonarcloud.io/api/badges/measure?key=io.silksource:Silk&metric=sqa
 
 = Silk
 
-Libraries and IDE plugins to enable smooth software development.
+Libraries and IDE plugins to enable https://smoothsoftwaredev.wordpress.com/[smooth software development].
 
 == Status
 
