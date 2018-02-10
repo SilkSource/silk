@@ -23,11 +23,10 @@ public class SerializeTestImpactMapToYaml {
 
   public void save(TestImpactMap testImpactMap, OutputStream output) {
     Map<String, Collection<String>> map = new TreeMap<>();
-    testImpactMap.sources().forEach(source -> {
-      map.put(source.toString(), new ArrayList<>(testImpactMap.testsTouching(source).stream()
+    testImpactMap.sources().forEach(source ->
+        map.put(source.toString(), new ArrayList<>(testImpactMap.testsTouching(source).stream()
           .map(FullyQualifiedName::toString)
-          .collect(Collectors.toSet())));
-    });
+          .collect(Collectors.toSet()))));
     try (PrintWriter writer = new PrintWriter(output)) {
       writer.println(new Yaml(dumperOptions()).dump(map));
     }
@@ -41,9 +40,8 @@ public class SerializeTestImpactMapToYaml {
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   public void load(InputStream input, TestImpactMap testImpactMap) {
-    Map<String, Collection<String>> map = (Map<String, Collection<String>>)new Yaml().load(input);
+    Map<String, Collection<String>> map = new Yaml().load(input);
     Set<FullyQualifiedName> testNames = map.values().stream()
         .flatMap(Collection::stream)
         .map(FullyQualifiedName::new)
