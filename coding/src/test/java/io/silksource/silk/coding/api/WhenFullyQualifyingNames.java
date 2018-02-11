@@ -13,13 +13,15 @@ import org.junit.Test;
 
 public class WhenFullyQualifyingNames {
 
+  private static final String INT = "int";
+
   @Test
   public void shouldConvertFromTypeDescriptor() {
     assertTypeDescriptor("Z", "boolean");
     assertTypeDescriptor("C", "char");
     assertTypeDescriptor("B", "byte");
     assertTypeDescriptor("S", "short");
-    assertTypeDescriptor("I", "int");
+    assertTypeDescriptor("I", INT);
     assertTypeDescriptor("F", "float");
     assertTypeDescriptor("J", "long");
     assertTypeDescriptor("D", "double");
@@ -46,15 +48,15 @@ public class WhenFullyQualifyingNames {
 
   @Test
   public void shouldNotHaveNamespaceForPrimitiveTypes() {
-    FullyQualifiedName fqn = new FullyQualifiedName("int");
-    assertEquals("Name", "int", fqn.getSimpleName());
+    FullyQualifiedName fqn = new FullyQualifiedName(INT);
+    assertEquals("Name", INT, fqn.getSimpleName());
     assertFalse("Should not have namespace", fqn.getNamespace().isPresent());
   }
 
   @Test
   public void shouldCombineNamespaceAndName() {
     assertEquals("java.lang.String", new FullyQualifiedName(new FullyQualifiedName("java.lang"), "String").toString());
-    assertEquals("int", new FullyQualifiedName(Optional.empty(), "int").toString());
+    assertEquals(INT, new FullyQualifiedName(Optional.empty(), INT).toString());
   }
 
 }
