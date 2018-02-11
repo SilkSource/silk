@@ -13,4 +13,6 @@ public interface TestRunner {
 
   Set<Method> findTestMethodsIn(Project project);
 
+  void runTest(Method testMethod, TestProgressMonitor listener);
+
 }

@@ -23,6 +23,7 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
+import io.silksource.silk.testing.TestProgressMonitor;
 import io.silksource.silk.testing.TestRunner;
 
 
@@ -71,6 +72,11 @@ public class JUnitTestRunner implements TestRunner {
         .map(ClassSource::getClassName)
         .findFirst()
         .orElse(methodSource.getClassName()));
+  }
+
+  @Override
+  public void runTest(Method testMethod, TestProgressMonitor listener) {
+    // TODO: Implement
   }
 
 }
