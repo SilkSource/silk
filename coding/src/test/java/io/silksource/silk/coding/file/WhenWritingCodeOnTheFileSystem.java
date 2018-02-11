@@ -14,7 +14,6 @@ import org.junit.rules.TemporaryFolder;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Project;
-import io.silksource.silk.coding.api.SourceSetNames;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.testdata.FullyQualifiedNameBuilder;
 
@@ -35,7 +34,7 @@ public class WhenWritingCodeOnTheFileSystem {
     assertTrue("Source dir not created", mainSourceDir.isDirectory());
     assertTrue("Test dir not created", new File(projectDir, "src/test/java").isDirectory());
 
-    Type type = project.sourceSet(SourceSetNames.MAIN.toString()).get().addType(typeName);
+    Type type = project.mainSources().addType(typeName);
     assertTrue("Type source not created",
         new File(mainSourceDir, typeName.getInternalName() + ".java").isFile());
     assertTrue("Type not compiled", type.getCompiledPath().toFile().isFile());
@@ -47,8 +46,7 @@ public class WhenWritingCodeOnTheFileSystem {
 
     Project project = new FileBasedProject(projectDir);
 
-    Optional<Type> thisType = project.sourceSet(SourceSetNames.TEST.toString())
-        .get()
+    Optional<Type> thisType = project.testSources()
         .type(new FullyQualifiedName(getClass().getName()));
     assertTrue("Type not loaded", thisType.isPresent());
   }

@@ -23,7 +23,6 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.coding.api.SourceSetNames;
 import io.silksource.silk.testing.TestRunner;
 
 
@@ -33,11 +32,8 @@ public class JUnitTestRunner implements TestRunner {
 
   @Override
   public Set<Method> findTestMethodsIn(Project project) {
-    Optional<SourceSet> testSources = project.sourceSet(SourceSetNames.TEST.toString());
-    if (!testSources.isPresent()) {
-      return Collections.emptySet();
-    }
-    Set<Path> classpathRoots = Collections.singleton(testSources.get().getCompiledPath());
+    SourceSet testSources = project.testSources();
+    Set<Path> classpathRoots = Collections.singleton(testSources.getCompiledPath());
     TestPlan testPlan = launcher.discover(LauncherDiscoveryRequestBuilder.request()
         .selectors(DiscoverySelectors.selectClasspathRoots(classpathRoots))
     .build());
@@ -45,7 +41,7 @@ public class JUnitTestRunner implements TestRunner {
         .flatMap(id -> testPlan.getDescendants(id).stream())
         .collect(Collectors.toList());
     return testIds.stream()
-        .map(id -> toMethod(testSources.get(), testIds, id))
+        .map(id -> toMethod(testSources, testIds, id))
         .filter(Optional::isPresent)
         .map(Optional::get)
         .collect(Collectors.toSet());

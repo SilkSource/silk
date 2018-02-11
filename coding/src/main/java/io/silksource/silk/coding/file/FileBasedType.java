@@ -45,7 +45,7 @@ public class FileBasedType implements Type {
   }
 
   private void typeCompiled(TypeCompiledEvent event) {
-    if (this.equals(event.getType())) {
+    if (equals(event.getType())) {
       loadCompiled();
     }
   }
@@ -65,20 +65,26 @@ public class FileBasedType implements Type {
   private void load() {
     if (getCompiledPath().toFile().exists()) {
       loadCompiled();
+    } else if (getSourcePath().toFile().exists()) {
+      // Will make sure this type gets compiled, so we'll end up in the branch above
+      changed();
     } else {
-      if (getSourcePath().toFile().exists()) {
-        compile();
-      } else {
-        create();
-      }
+      // Will also make sure this type gets compiled and then loaded via the first branch
+      setInitialText();
     }
   }
 
-  private void compile() {
-    getEvents().fire(new TypeChangedEvent(this));
+  private void changed() {
+    changed(new TypeChangedEvent(this));
   }
 
-  private void create() {
+  private void changed(TypeChangedEvent event) {
+    if (!loading) {
+      getEvents().fire(event);
+    }
+  }
+
+  private void setInitialText() {
     Optional.ofNullable(getSourcePath().getParent())
         .map(Path::toFile)
         .ifPresent(File::mkdirs);
@@ -87,7 +93,7 @@ public class FileBasedType implements Type {
 
   private String getInitialText() {
     StringBuilder result = new StringBuilder();
-    name.getParent().ifPresent(parent ->
+    name.getNamespace().ifPresent(parent ->
         result.append("package ").append(parent).append(';').append(NL).append(NL));
     result.append("public class ").append(name.getSimpleName()).append(" {").append(NL)
         .append('}').append(NL);
@@ -100,7 +106,7 @@ public class FileBasedType implements Type {
     } catch (IOException e) {
       throw new SourceSynchronizationException("Could not write text", e);
     }
-    compile();
+    changed();
   }
 
   @Override
@@ -117,14 +123,8 @@ public class FileBasedType implements Type {
   public Field addField(String fieldName, FullyQualifiedName type) {
     Field result = new DefaultField(this, fieldName, type);
     fields.add(result);
-    fireEvent(new FieldAddedEvent(result));
+    changed(new FieldAddedEvent(result));
     return result;
-  }
-
-  private void fireEvent(TypeChangedEvent event) {
-    if (!loading) {
-      getProject().fire(event);
-    }
   }
 
   @Override
@@ -136,7 +136,7 @@ public class FileBasedType implements Type {
   public Method addMethod(String methodName) {
     Method result = new DefaultMethod(this, methodName);
     methods.add(result);
-    fireEvent(new MethodAddedEvent(result));
+    changed(new MethodAddedEvent(result));
     return result;
   }
 

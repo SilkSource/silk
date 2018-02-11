@@ -17,7 +17,6 @@ import org.junit.Test;
 import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.coding.api.SourceSetNames;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.TypeAddedEvent;
@@ -49,7 +48,7 @@ public abstract class WhenManipulatingCode {
   @Test
   public void shouldCreateAClass() {
     FullyQualifiedName type = new FullyQualifiedName("com.foo.Bar");
-    SourceSet sourceSet = project.sourceSet(SourceSetNames.MAIN.toString()).get();
+    SourceSet sourceSet = project.mainSources();
     sourceSet.addType(type);
 
     assertThat("Type added", sourceSet.getTypes().stream()
@@ -63,7 +62,7 @@ public abstract class WhenManipulatingCode {
     String typeName = "Baz";
     String fieldName = "gnu";
     String fieldType = "Gnu";
-    SourceSet sourceSet = project.sourceSet(SourceSetNames.TEST.toString()).get();
+    SourceSet sourceSet = project.testSources();
     Type type = sourceSet.addType(new FullyQualifiedName(typeName));
 
     type.addField(fieldName, sourceSet.addType(new FullyQualifiedName(fieldType)).getName());

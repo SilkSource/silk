@@ -37,6 +37,19 @@ public interface Project extends FileBased {
         .findAny();
   }
 
+  default SourceSet mainSources() {
+    return namedSourceSet(SourceSetNames.MAIN);
+  }
+
+  default SourceSet namedSourceSet(SourceSetNames name) {
+    return sourceSet(name.toString())
+        .orElseThrow(() -> new IllegalStateException("Missing " + name + " sources"));
+  }
+
+  default SourceSet testSources() {
+    return namedSourceSet(SourceSetNames.TEST);
+  }
+
   /**
    * Returns the events for the project.
    * @return the events for the project
