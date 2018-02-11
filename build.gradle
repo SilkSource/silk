@@ -87,14 +87,6 @@ if (project.hasProperty('sonarToken')) {
 
 
 
-project(':internal-testing') {
-  dependencies {
-    testCompile project(':coding')
-  }
-}
-
-
-
 project(':coding') {
   configurations {
     compile.extendsFrom asm, commonsIo, ecj
@@ -117,8 +109,8 @@ project(':continuous-testing') {
   }
 
   dependencies {
-    compile project(':coding'), 
-        project(':internal-testing').sourceSets.test.output
+    compile project(':coding')
+    testCompile project(':coding').sourceSets.test.output
   }
 }
 

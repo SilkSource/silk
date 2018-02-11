@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 
+import io.silksource.silk.coding.api.CompilationFailedException;
 import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
@@ -34,7 +35,9 @@ public class FileBasedProject implements Project {
 
   public FileBasedProject(File dir) {
     try {
-      this.root = dir.getCanonicalFile().toPath();
+      File file = dir.getCanonicalFile();
+      file.mkdirs();
+      this.root = file.toPath();
     } catch (IOException e) {
       throw new SourceSynchronizationException("Failed to canonicalize project dir: " + dir, e);
     }
@@ -51,12 +54,16 @@ public class FileBasedProject implements Project {
   }
 
   private void compile(Type type) {
-    compile(type.getSourcePath(), type.getCompiledPath());
+    compile(type.getSourcePath(), type.getSourceSet().getCompiledPath());
   }
 
   private void compile(Path source, Path destination) {
-    try (PrintWriter writer = new PrintWriter(new StringWriter())) {
-      BatchCompiler.compile(String.format("%s -d %s", source, destination), writer, writer, null);
+    StringWriter output = new StringWriter();
+    try (PrintWriter writer = new PrintWriter(output)) {
+      String commandLine = String.format("%s -d %s", source, destination);
+      if (!BatchCompiler.compile(commandLine, writer, writer, null)) {
+        throw new CompilationFailedException(commandLine, output.toString());
+      }
     }
   }
 

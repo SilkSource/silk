@@ -5,10 +5,26 @@ package io.silksource.silk.coding.environment;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
 public class WhenDeterminingTheEnvironmentTheCodeRunsIn {
+
+  private static final String STARTUP_COMMAND_PROP = "sun.java.command";
+
+  private String saveStartupCommand;
+
+  @Before
+  public void init() {
+    saveStartupCommand = System.getProperty(STARTUP_COMMAND_PROP);
+  }
+
+  @After
+  public void done() {
+    System.setProperty(STARTUP_COMMAND_PROP, saveStartupCommand);
+  }
 
   @Test
   public void shouldDecideOnGradleWhenRunningInGradle() {
@@ -16,7 +32,7 @@ public class WhenDeterminingTheEnvironmentTheCodeRunsIn {
   }
 
   private void assertEnvironment(String command, Class<? extends Environment> expectedType) {
-    System.setProperty("sun.java.command", command);
+    System.setProperty(STARTUP_COMMAND_PROP, command);
 
     Environment environment = EnvironmentFactory.newInstance();
 

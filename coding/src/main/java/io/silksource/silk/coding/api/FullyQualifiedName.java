@@ -47,6 +47,14 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
         : Optional.of(name.substring(0, index)).map(FullyQualifiedName::new);
   }
 
+  /**
+   * Returns the internal name of the type.
+   * @return the internal name of the type
+   */
+  public String getInternalName() {
+    return toString().replace('.', '/');
+  }
+
   @Override
   public int hashCode() {
     return name.hashCode();
