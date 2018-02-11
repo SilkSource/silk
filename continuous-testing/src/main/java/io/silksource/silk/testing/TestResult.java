@@ -9,20 +9,33 @@ import java.util.Optional;
 /**
  * Result of executing a test.
  */
-public interface TestResult {
+public class TestResult {
 
-  enum Status { PASSED, FAILED, ABORTED }
+  public enum Status { PASSED, FAILED, ABORTED }
+
+
+  private final Status status;
+  private final Optional<Throwable> exception;
+
+  public TestResult(Status status, Optional<Throwable> exception) {
+    this.status = status;
+    this.exception = exception;
+  }
 
   /**
    * Returns the status of the test.
    * @return the status of the test
    */
-  Status getStatus();
+  public Status getStatus() {
+    return status;
+  }
 
   /**
    * Returns the exception that was thrown by the test, if any.
    * @return the exception that was thrown by the test, if any
    */
-  Optional<Throwable> getException();
+  public Optional<Throwable> getException() {
+    return exception;
+  }
 
 }

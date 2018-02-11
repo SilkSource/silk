@@ -14,6 +14,7 @@ import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.engine.support.descriptor.ClassSource;
 import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
@@ -23,7 +24,7 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.testing.TestProgressMonitor;
+import io.silksource.silk.testing.TestListener;
 import io.silksource.silk.testing.TestRunner;
 
 
@@ -75,8 +76,15 @@ public class JUnitTestRunner implements TestRunner {
   }
 
   @Override
-  public void runTest(Method testMethod, TestProgressMonitor listener) {
-    // TODO: Implement
+  public void runTest(Method testMethod, TestListener listener) {
+    LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+        .selectors(DiscoverySelectors.selectMethod(fullyQualifiedMethodNameOf(testMethod)))
+    .build();
+    launcher.execute(request, new TestExecutionListenerAdapter(testMethod, listener));
+  }
+
+  private String fullyQualifiedMethodNameOf(Method method) {
+    return String.format("%s#%s", method.getOwningType().getName(), method.getName());
   }
 
 }
