@@ -3,6 +3,7 @@
  */
 package io.silksource.silk.coding.api;
 
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -63,5 +64,11 @@ public interface Project extends FileBased {
   default void fire(Object event) {
     getEvents().fire(event);
   }
+
+  /**
+   * Returns the location on the file system where temporary files are stored.
+   * @return the location on the file system where temporary files are stored
+   */
+  Path getScrathPath();
 
 }

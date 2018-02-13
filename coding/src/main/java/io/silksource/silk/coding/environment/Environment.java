@@ -3,7 +3,6 @@
  */
 package io.silksource.silk.coding.environment;
 
-
 /**
  * The environment in which coding takes place.
  */
@@ -20,5 +19,11 @@ public interface Environment {
    * @return the path to the compiled sources, relative to the project directory
    */
   String getCompiledDir();
+
+  /**
+   * Returns the path to where temporary files are stored.
+   * @return the path to where temporary files are stored
+   */
+  String getScratchDir();
 
 }

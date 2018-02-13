@@ -16,4 +16,9 @@ public class EclipseEnvironment implements Environment {
     return "classes";
   }
 
+  @Override
+  public String getScratchDir() {
+    return ".settings";
+  }
+
 }

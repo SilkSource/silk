@@ -24,6 +24,7 @@ import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.environment.Environment;
 import io.silksource.silk.coding.environment.EnvironmentFactory;
 import io.silksource.silk.coding.event.TypeChangedEvent;
+import io.silksource.silk.coding.event.TypeCompiledEvent;
 
 
 public class FileBasedProject implements Project {
@@ -55,16 +56,22 @@ public class FileBasedProject implements Project {
 
   private void compile(Type type) {
     compile(type.getSourcePath(), type.getSourceSet().getCompiledPath());
+    fire(new TypeCompiledEvent(type));
   }
 
   private void compile(Path source, Path destination) {
     StringWriter output = new StringWriter();
     try (PrintWriter writer = new PrintWriter(output)) {
-      String commandLine = String.format("%s -d %s", source, destination);
+      String commandLine = String.format("-source 1.8 %s -d %s", source, destination);
       if (!BatchCompiler.compile(commandLine, writer, writer, null)) {
         throw new CompilationFailedException(commandLine, output.toString());
       }
     }
+  }
+
+  @Override
+  public Path getScrathPath() {
+    return root.resolve(environment.getScratchDir());
   }
 
   @Override

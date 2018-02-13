@@ -101,4 +101,10 @@ public interface Type extends FileBased {
         .findAny();
   }
 
+  /**
+   * Set this type's code as text.
+   * @param text the full source code for this type
+   */
+  void setText(String text);
+
 }

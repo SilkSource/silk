@@ -100,7 +100,8 @@ public class FileBasedType implements Type {
     return result.toString();
   }
 
-  private void setText(String text) {
+  @Override
+  public final void setText(String text) {
     try (Writer writer = Files.newBufferedWriter(getSourcePath(), StandardOpenOption.CREATE)) {
       writer.write(text);
     } catch (IOException e) {

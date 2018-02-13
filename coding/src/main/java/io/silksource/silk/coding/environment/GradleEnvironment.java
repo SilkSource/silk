@@ -16,4 +16,9 @@ public class GradleEnvironment implements Environment {
     return "build/classes/java";
   }
 
+  @Override
+  public String getScratchDir() {
+    return "build";
+  }
+
 }
