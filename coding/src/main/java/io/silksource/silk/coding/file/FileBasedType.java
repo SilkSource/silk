@@ -19,6 +19,7 @@ import org.objectweb.asm.ClassReader;
 
 import io.silksource.silk.coding.api.Field;
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSynchronizationException;
@@ -124,7 +125,7 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public Field addField(String fieldName, FullyQualifiedName type) {
+  public Field addField(Identifier fieldName, FullyQualifiedName type) {
     Field result = new DefaultField(this, fieldName, type);
     fields.add(result);
     changed(new FieldAddedEvent(result));
@@ -137,7 +138,7 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public Method addMethod(String methodName) {
+  public Method addMethod(Identifier methodName) {
     Method result = new DefaultMethod(this, methodName);
     methods.add(result);
     changed(new MethodAddedEvent(result));

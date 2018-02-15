@@ -21,6 +21,7 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
@@ -60,7 +61,7 @@ public class JUnitTestRunner implements TestRunner {
   private Optional<Method> toMethod(SourceSet sourceSet, Collection<TestIdentifier> testIds,
       String parentId, MethodSource methodSource) {
     return sourceSet.type(typeOf(testIds, parentId, methodSource))
-        .flatMap(t -> t.method(methodSource.getMethodName()));
+        .flatMap(t -> t.method(new Identifier(methodSource.getMethodName())));
   }
 
   private FullyQualifiedName typeOf(Collection<TestIdentifier> testIds, String parentId,

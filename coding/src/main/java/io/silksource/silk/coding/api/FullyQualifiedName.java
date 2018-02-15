@@ -8,21 +8,20 @@ import java.util.Optional;
 
 
 /**
- * Unique identifier consisting of an optional namespace and a name that is unique within that
- * namespace.
+ * Unique identifier consisting of an optional namespace and an identifier that is unique within that namespace.
  */
 public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
 
-  private final String name;
+  private final String fqn;
 
-  public static FullyQualifiedName parse(String fqn) {
-    if (fqn == null || fqn.trim().isEmpty()) {
+  public static FullyQualifiedName parse(String value) {
+    if (value == null || value.trim().isEmpty()) {
       throw new IllegalArgumentException("Missing fully qualified name");
     }
-    for (String part : fqn.split("\\.")) {
+    for (String part : value.split("\\.")) {
       new Identifier(part);
     }
-    return new FullyQualifiedName(fqn);
+    return new FullyQualifiedName(value);
   }
 
   public static FullyQualifiedName parseTypeDescriptor(String descriptor) {
@@ -65,8 +64,8 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
     this(namespace.map(fqn -> fqn + ".").orElse("") + Objects.requireNonNull(name, "Missing name"));
   }
 
-  private FullyQualifiedName(String name) {
-    this.name = name;
+  private FullyQualifiedName(String fqn) {
+    this.fqn = fqn;
   }
 
   public FullyQualifiedName(Identifier name) {
@@ -78,8 +77,8 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
    * @return the name within the namespace
    */
   public String getSimpleName() {
-    int index = name.lastIndexOf('.');
-    return index < 0 ? name : name.substring(index + 1);
+    int index = fqn.lastIndexOf('.');
+    return index < 0 ? fqn : fqn.substring(index + 1);
   }
 
   /**
@@ -87,10 +86,10 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
    * @return the optional namespace of the item
    */
   public Optional<FullyQualifiedName> getNamespace() {
-    int index = name.lastIndexOf('.');
+    int index = fqn.lastIndexOf('.');
     return index < 0
         ? Optional.empty()
-        : Optional.of(name.substring(0, index)).map(FullyQualifiedName::new);
+        : Optional.of(fqn.substring(0, index)).map(FullyQualifiedName::new);
   }
 
   /**
@@ -103,26 +102,26 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
 
   @Override
   public int hashCode() {
-    return name.hashCode();
+    return fqn.hashCode();
   }
 
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof FullyQualifiedName) {
       FullyQualifiedName other = (FullyQualifiedName)obj;
-      return name.equals(other.name);
+      return fqn.equals(other.fqn);
     }
     return false;
   }
 
   @Override
   public int compareTo(FullyQualifiedName other) {
-    return name.compareTo(other.name);
+    return fqn.compareTo(other.fqn);
   }
 
   @Override
   public String toString() {
-    return name;
+    return fqn;
   }
 
 }

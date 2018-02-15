@@ -23,6 +23,10 @@ public interface FileBased {
    */
   Path getCompiledPath();
 
+  /**
+   * Returns whether the item exists on the file system.
+   * @return whether the item exists on the file system
+   */
   default boolean exists() {
     return getSourcePath().toFile().exists();
   }

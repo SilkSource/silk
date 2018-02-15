@@ -3,8 +3,13 @@
  */
 package io.silksource.silk.coding.api;
 
+import java.util.Objects;
 
-public class Identifier {
+
+/**
+ * Something that uniquely identifies a piece of source code within a context.
+ */
+public class Identifier implements Comparable<Identifier> {
 
   private final String text;
 
@@ -28,6 +33,25 @@ public class Identifier {
       }
     }
     return true;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Identifier) {
+      Identifier other = (Identifier)obj;
+      return Objects.equals(text, other.text);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(text);
+  }
+
+  @Override
+  public int compareTo(Identifier other) {
+    return text.compareTo(other.text);
   }
 
   @Override

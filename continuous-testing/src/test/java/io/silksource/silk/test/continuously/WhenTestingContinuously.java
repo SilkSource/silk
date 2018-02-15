@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.testdata.ProjectBuilder;
@@ -42,7 +43,7 @@ public class WhenTestingContinuously {
     .build();
     Method testMethod = project.testSources()
         .type(FullyQualifiedName.parse(testTypeName))
-        .flatMap(type -> type.method(testMethodName))
+        .flatMap(type -> type.method(new Identifier(testMethodName)))
         .get();
     when(testRunner.findTestMethodsIn(project)).thenReturn(Collections.singleton(testMethod));
 

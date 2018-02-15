@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
@@ -65,7 +66,7 @@ public abstract class WhenManipulatingCode {
     SourceSet sourceSet = project.testSources();
     Type type = sourceSet.addType(FullyQualifiedName.parse(typeName));
 
-    type.addField(fieldName, sourceSet.addType(FullyQualifiedName.parse(fieldType)).getName());
+    type.addField(new Identifier(fieldName), sourceSet.addType(FullyQualifiedName.parse(fieldType)).getName());
 
     assertThat("Field added", type.getFields().stream()
         .map(f -> f.getName())

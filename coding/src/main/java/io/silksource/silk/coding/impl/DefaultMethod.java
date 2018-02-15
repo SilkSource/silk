@@ -3,13 +3,14 @@
  */
 package io.silksource.silk.coding.impl;
 
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Type;
 
 
 public class DefaultMethod extends DefaultMember implements Method {
 
-  public DefaultMethod(Type ownerType, String name) {
+  public DefaultMethod(Type ownerType, Identifier name) {
     super(ownerType, name);
   }
 

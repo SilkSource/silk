@@ -19,6 +19,6 @@ public interface Member {
    * Returns the name of the member. The name identifies the member within the owning type.
    * @return the name of the member
    */
-  String getName();
+  Identifier getName();
 
 }

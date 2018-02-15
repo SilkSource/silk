@@ -4,6 +4,7 @@
 package io.silksource.silk.testing;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 
 
 /**
@@ -11,10 +12,10 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
  */
 public interface TestListener {
 
-  void start(FullyQualifiedName typeName, String methodName);
+  void start(FullyQualifiedName typeName, Identifier methodName);
 
-  void skip(FullyQualifiedName typeName, String methodName);
+  void skip(FullyQualifiedName typeName, Identifier methodName);
 
-  void finish(FullyQualifiedName typeName, String methodName, TestResult result);
+  void finish(FullyQualifiedName typeName, Identifier methodName, TestResult result);
 
 }

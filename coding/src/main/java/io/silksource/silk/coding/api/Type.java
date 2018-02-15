@@ -58,7 +58,7 @@ public interface Type extends FileBased {
    * @param type the type of the field to add
    * @return the added field
    */
-  Field addField(String name, FullyQualifiedName type);
+  Field addField(Identifier name, FullyQualifiedName type);
 
   /**
    * Returns all the fields in this type.
@@ -71,7 +71,7 @@ public interface Type extends FileBased {
    * @param name the name of the field to look for
    * @return the field with the given name, if any
    */
-  default Optional<Field> field(String name) {
+  default Optional<Field> field(Identifier name) {
     return getFields().stream()
         .filter(s -> s.getName().equals(name))
         .findAny();
@@ -82,7 +82,7 @@ public interface Type extends FileBased {
    * @param name the name of the method to add
    * @return the added method
    */
-  Method addMethod(String name);
+  Method addMethod(Identifier name);
 
   /**
    * Returns all the methods in this type.
@@ -95,7 +95,7 @@ public interface Type extends FileBased {
    * @param name the name of the method to look for
    * @return the method with the given name, if any
    */
-  default Optional<Method> method(String name) {
+  default Optional<Method> method(Identifier name) {
     return getMethods().stream()
         .filter(s -> s.getName().equals(name))
         .findAny();

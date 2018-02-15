@@ -21,6 +21,7 @@ import org.junit.rules.TestName;
 import org.mockito.ArgumentCaptor;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.Type;
@@ -51,7 +52,7 @@ public class WhenTestingUsingJUnit {
   }
 
   private boolean isCurrentMethod(Method method) {
-    return testName.getMethodName().equals(method.getName())
+    return new Identifier(testName.getMethodName()).equals(method.getName())
         && className.equals(method.getOwningType().getName());
   }
 
@@ -76,7 +77,7 @@ public class WhenTestingUsingJUnit {
     assertTrue("Missing type", type.isPresent());
     Type testType = type.get();
 
-    Optional<Method> method = testType.method(name);
+    Optional<Method> method = testType.method(new Identifier(name));
     assertTrue("Missing method", type.isPresent());
 
     return method.get();
