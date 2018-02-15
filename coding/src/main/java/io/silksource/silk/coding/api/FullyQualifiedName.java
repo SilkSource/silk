@@ -61,7 +61,7 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
   }
 
   public FullyQualifiedName(Optional<FullyQualifiedName> namespace, Identifier name) {
-    this(namespace.map(fqn -> fqn + ".").orElse("") + Objects.requireNonNull(name, "Missing name"));
+    this(namespace.map(f -> f + ".").orElse("") + Objects.requireNonNull(name, "Missing name"));
   }
 
   private FullyQualifiedName(String fqn) {

@@ -10,6 +10,9 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import io.silksource.silk.testdata.FullyQualifiedNameBuilder;
+import io.silksource.silk.testdata.ValueObjectChecker;
+
 
 public class WhenFullyQualifyingNames {
 
@@ -57,6 +60,15 @@ public class WhenFullyQualifyingNames {
     assertEquals("java.lang.String", new FullyQualifiedName(
         FullyQualifiedName.parse("java.lang"), new Identifier("String")).toString());
     assertEquals(INT, new FullyQualifiedName(Optional.empty(), new Identifier(INT)).toString());
+  }
+
+  @Test
+  public void shouldBeValueObject() {
+    FullyQualifiedName object1a = FullyQualifiedNameBuilder.someFullyQualifiedName();
+    FullyQualifiedName object1b = FullyQualifiedName.parse(object1a.toString());
+    FullyQualifiedName object2 = FullyQualifiedNameBuilder.someFullyQualifiedName();
+
+    new ValueObjectChecker().assertValueObject(object1a, object1b, object2);
   }
 
 }
