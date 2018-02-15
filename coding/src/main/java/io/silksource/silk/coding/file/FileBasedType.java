@@ -26,6 +26,8 @@ import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.MethodAddedEvent;
 import io.silksource.silk.coding.event.TypeChangedEvent;
 import io.silksource.silk.coding.event.TypeCompiledEvent;
+import io.silksource.silk.coding.impl.DefaultField;
+import io.silksource.silk.coding.impl.DefaultMethod;
 
 
 public class FileBasedType implements Type {
