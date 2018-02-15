@@ -20,6 +20,7 @@ import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSetNames;
+import io.silksource.silk.coding.api.SourceSynchronizationException;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.environment.Environment;
 import io.silksource.silk.coding.environment.EnvironmentFactory;

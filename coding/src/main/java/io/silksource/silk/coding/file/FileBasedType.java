@@ -21,6 +21,7 @@ import io.silksource.silk.coding.api.Field;
 import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.SourceSet;
+import io.silksource.silk.coding.api.SourceSynchronizationException;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.MethodAddedEvent;
