@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.coding.heal;
+package io.silksource.silk.coding.auto.syntax;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -19,9 +19,9 @@ import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
+import io.silksource.silk.coding.auto.registry.AllHealers;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.TypeAddedEvent;
-import io.silksource.silk.coding.heal.registry.AllHealers;
 
 
 public abstract class WhenManipulatingCode {
@@ -69,9 +69,9 @@ public abstract class WhenManipulatingCode {
     type.addField(new Identifier(fieldName), sourceSet.addType(FullyQualifiedName.parse(fieldType)).getName());
 
     assertThat("Field added", type.getFields().stream()
-        .map(f -> f.getName())
+        .map(f -> f.getName().toString())
         .collect(Collectors.toList()), hasItem(fieldName));
-    assertThat("FieldAddedEvent fired", firedEvent(FieldAddedEvent.class).getField().getName(),
+    assertThat("FieldAddedEvent fired", firedEvent(FieldAddedEvent.class).getField().getName().toString(),
         equalTo(fieldName));
   }
 

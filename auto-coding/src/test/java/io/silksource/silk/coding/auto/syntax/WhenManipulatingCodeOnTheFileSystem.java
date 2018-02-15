@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.coding.file;
+package io.silksource.silk.coding.auto.syntax;
 
 import java.io.IOException;
 import java.nio.file.Files;
 
 import io.silksource.silk.coding.api.Project;
-import io.silksource.silk.coding.heal.WhenManipulatingCode;
+import io.silksource.silk.coding.file.FileBasedProject;
 
 
 public class WhenManipulatingCodeOnTheFileSystem extends WhenManipulatingCode {

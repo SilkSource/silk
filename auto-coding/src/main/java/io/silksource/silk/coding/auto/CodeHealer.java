@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.coding.heal;
+package io.silksource.silk.coding.auto;
 
 import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Project;

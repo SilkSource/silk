@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.coding.heal.registry;
+package io.silksource.silk.coding.auto.registry;
 
 import java.util.Arrays;
 
 import io.silksource.silk.coding.api.Project;
-import io.silksource.silk.coding.heal.CodeHealer;
-import io.silksource.silk.coding.heal.syntax.CreateMissingClassUnderTest;
+import io.silksource.silk.coding.auto.CodeHealer;
+import io.silksource.silk.coding.auto.syntax.CreateMissingClassUnderTest;
 
 
 public final class AllHealers {

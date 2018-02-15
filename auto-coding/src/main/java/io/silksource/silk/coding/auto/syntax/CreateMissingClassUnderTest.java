@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.coding.heal.syntax;
+package io.silksource.silk.coding.auto.syntax;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -12,8 +12,8 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSetNames;
 import io.silksource.silk.coding.api.Type;
+import io.silksource.silk.coding.auto.CodeHealer;
 import io.silksource.silk.coding.event.FieldAddedEvent;
-import io.silksource.silk.coding.heal.CodeHealer;
 
 
 /**
