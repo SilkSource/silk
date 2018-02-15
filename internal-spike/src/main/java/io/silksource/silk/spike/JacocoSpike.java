@@ -43,7 +43,7 @@ public class JacocoSpike {
   private void run() throws Exception {
     Project project = new FileBasedProject(File.createTempFile("project-", "-spike"));
     SourceSet sourceSet = new FileBasedSourceSet(project, "main");
-    Type type = new FileBasedType(sourceSet, new FullyQualifiedName(
+    Type type = new FileBasedType(sourceSet, FullyQualifiedName.parse(
         CreateMissingClassUnderTest.class.getName()));
     String targetClassName = type.getName().toString();
 

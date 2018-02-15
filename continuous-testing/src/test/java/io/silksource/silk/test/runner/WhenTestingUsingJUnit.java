@@ -38,7 +38,7 @@ public class WhenTestingUsingJUnit {
   public TestName testName = new TestName();
   private final TestRunner testRunner = new JUnitTestRunner();
   private final Project project = new FileBasedProject(new File("."));
-  private final FullyQualifiedName className = new FullyQualifiedName(getClass().getName());
+  private final FullyQualifiedName className = FullyQualifiedName.parse(getClass().getName());
 
   @Test
   public void shouldDiscoverTests() {

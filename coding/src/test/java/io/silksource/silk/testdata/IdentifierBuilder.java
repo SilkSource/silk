@@ -6,14 +6,16 @@ package io.silksource.silk.testdata;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import io.silksource.silk.coding.api.Identifier;
+
 
 public class IdentifierBuilder {
 
-  public static String someIdentifier() {
+  public static Identifier someIdentifier() {
     return new IdentifierBuilder().build();
   }
 
-  public static String someTypeName() {
+  public static Identifier someTypeName() {
     return new IdentifierBuilder().forType().build();
   }
 
@@ -35,12 +37,12 @@ public class IdentifierBuilder {
     return this;
   }
 
-  public String build() {
-    return initialChar() + Stream.generate(() -> nextChar())
+  public Identifier build() {
+    return new Identifier(initialChar() + Stream.generate(() -> nextChar())
         .limit(length)
         .collect(StringBuilder::new,
             (sb,  c) -> sb.append(c.charValue()),
-            (sb1, sb2) -> sb1.append(sb2)).toString();
+            (sb1, sb2) -> sb1.append(sb2)).toString());
   }
 
   private char nextChar() {

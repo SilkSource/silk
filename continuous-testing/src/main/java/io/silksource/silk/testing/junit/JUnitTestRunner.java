@@ -65,7 +65,7 @@ public class JUnitTestRunner implements TestRunner {
 
   private FullyQualifiedName typeOf(Collection<TestIdentifier> testIds, String parentId,
       MethodSource methodSource) {
-    return new FullyQualifiedName(testIds.stream()
+    return FullyQualifiedName.parse(testIds.stream()
         .filter(id -> id.getUniqueId().equals(parentId))
         .map(TestIdentifier::getSource)
         .map(Optional::get)

@@ -39,7 +39,7 @@ public class TypeLoader extends ClassVisitor {
   @Override
   public FieldVisitor visitField(int access, String name, String descriptor, String signature,
       Object value) {
-    type.addField(name, FullyQualifiedName.fromTypeDescriptor(descriptor));
+    type.addField(name, FullyQualifiedName.parseTypeDescriptor(descriptor));
     return super.visitField(access, name, descriptor, signature, value);
   }
 

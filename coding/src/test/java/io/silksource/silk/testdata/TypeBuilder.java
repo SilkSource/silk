@@ -23,7 +23,7 @@ public class TypeBuilder {
   public TypeBuilder(ProjectBuilder parent, SourceSet sourceSet, String fqn) {
     this.parent = parent;
     this.sourceSet = sourceSet;
-    this.name = new FullyQualifiedName(fqn);
+    this.name = FullyQualifiedName.parse(fqn);
   }
 
   public ProjectBuilder end() {

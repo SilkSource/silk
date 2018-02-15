@@ -50,13 +50,13 @@ public class SerializeTestImpactMapToYaml {
     Map<String, Collection<String>> map = new Yaml().load(input);
     Set<FullyQualifiedName> testNames = map.values().stream()
         .flatMap(Collection::stream)
-        .map(FullyQualifiedName::new)
+        .map(FullyQualifiedName::parse)
         .collect(Collectors.toSet());
     testNames.forEach(testName -> {
       Set<FullyQualifiedName> sourcesTouchedByTest = map.entrySet().stream()
           .filter(e -> contains(e.getValue(), testName))
           .map(Entry::getKey)
-          .map(FullyQualifiedName::new)
+          .map(FullyQualifiedName::parse)
           .collect(Collectors.toSet());
       testImpactMap.testTouches(testName, sourcesTouchedByTest);
     });
@@ -64,7 +64,7 @@ public class SerializeTestImpactMapToYaml {
 
   private boolean contains(Collection<String> items, FullyQualifiedName candidate) {
     return items.stream()
-        .map(FullyQualifiedName::new)
+        .map(FullyQualifiedName::parse)
         .anyMatch(candidate::equals);
   }
 

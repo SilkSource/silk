@@ -9,6 +9,7 @@ import static io.silksource.silk.testdata.IdentifierBuilder.someTypeName;
 import java.util.Random;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 
 
 public class FullyQualifiedNameBuilder {
@@ -19,10 +20,10 @@ public class FullyQualifiedNameBuilder {
 
   private final Random random = new Random();
   private FullyQualifiedName parent = somePackage();
-  private String name = someTypeName();
+  private Identifier name = someTypeName();
 
   private FullyQualifiedName somePackage() {
-    String identifier = someIdentifier();
+    Identifier identifier = someIdentifier();
     if (random.nextBoolean()) {
       return new FullyQualifiedName(identifier);
     }
@@ -35,7 +36,7 @@ public class FullyQualifiedNameBuilder {
   }
 
   public FullyQualifiedNameBuilder withName(String newName) {
-    this.name = newName;
+    this.name = new Identifier(newName);
     return this;
   }
 

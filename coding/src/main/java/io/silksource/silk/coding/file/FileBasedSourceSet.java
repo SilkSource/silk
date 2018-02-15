@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.apache.commons.io.FilenameUtils;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
@@ -37,7 +38,7 @@ public class FileBasedSourceSet implements SourceSet {
     if (files != null) {
       for (File file : files) {
         String identifier = FilenameUtils.removeExtension(file.getName());
-        FullyQualifiedName fqn = new FullyQualifiedName(parent, identifier);
+        FullyQualifiedName fqn = new FullyQualifiedName(parent, new Identifier(identifier));
         if (file.isDirectory()) {
           addTypesFrom(Optional.of(fqn), file);
         } else if (file.isFile()) {

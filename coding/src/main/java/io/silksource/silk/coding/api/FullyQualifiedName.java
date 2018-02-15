@@ -15,7 +15,17 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
 
   private final String name;
 
-  public static FullyQualifiedName fromTypeDescriptor(String descriptor) {
+  public static FullyQualifiedName parse(String fqn) {
+    if (fqn == null || fqn.trim().isEmpty()) {
+      throw new IllegalArgumentException("Missing fully qualified name");
+    }
+    for (String part : fqn.split("\\.")) {
+      new Identifier(part);
+    }
+    return new FullyQualifiedName(fqn);
+  }
+
+  public static FullyQualifiedName parseTypeDescriptor(String descriptor) {
     return new FullyQualifiedName(typeDescriptorToTypeString(descriptor));
   }
 
@@ -47,16 +57,19 @@ public class FullyQualifiedName implements Comparable<FullyQualifiedName> {
     }
   }
 
-  public FullyQualifiedName(FullyQualifiedName namespace, String name) {
+  public FullyQualifiedName(FullyQualifiedName namespace, Identifier name) {
     this(Optional.of(namespace), name);
   }
 
-  public FullyQualifiedName(Optional<FullyQualifiedName> namespace, String name) {
-    Objects.requireNonNull(name, "Missing name");
-    this.name = namespace.map(fqn -> fqn + ".").orElse("") + name;
+  public FullyQualifiedName(Optional<FullyQualifiedName> namespace, Identifier name) {
+    this(namespace.map(fqn -> fqn + ".").orElse("") + Objects.requireNonNull(name, "Missing name"));
   }
 
-  public FullyQualifiedName(String name) {
+  private FullyQualifiedName(String name) {
+    this.name = name;
+  }
+
+  public FullyQualifiedName(Identifier name) {
     this(Optional.empty(), name);
   }
 

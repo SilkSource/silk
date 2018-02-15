@@ -41,7 +41,7 @@ public class WhenTestingContinuously {
         .end()
     .build();
     Method testMethod = project.testSources()
-        .type(new FullyQualifiedName(testTypeName))
+        .type(FullyQualifiedName.parse(testTypeName))
         .flatMap(type -> type.method(testMethodName))
         .get();
     when(testRunner.findTestMethodsIn(project)).thenReturn(Collections.singleton(testMethod));

@@ -47,7 +47,7 @@ public class WhenWritingCodeOnTheFileSystem {
     Project project = new FileBasedProject(projectDir);
 
     Optional<Type> thisType = project.testSources()
-        .type(new FullyQualifiedName(getClass().getName()));
+        .type(FullyQualifiedName.parse(getClass().getName()));
     assertTrue("Type not loaded", thisType.isPresent());
   }
 

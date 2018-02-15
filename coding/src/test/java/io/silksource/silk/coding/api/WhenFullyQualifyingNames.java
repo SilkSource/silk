@@ -30,33 +30,33 @@ public class WhenFullyQualifyingNames {
   }
 
   private void assertTypeDescriptor(String typeDescriptor, String fqn) {
-    assertEquals(typeDescriptor, new FullyQualifiedName(fqn),
-        FullyQualifiedName.fromTypeDescriptor(typeDescriptor));
+    assertEquals(typeDescriptor, fqn, FullyQualifiedName.parseTypeDescriptor(typeDescriptor).toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotConvertIncorrectTypeDescriptor() {
-    FullyQualifiedName.fromTypeDescriptor("foo");
+    FullyQualifiedName.parseTypeDescriptor("foo");
   }
 
   @Test
   public void shouldSplitInNameAndNamespace() {
-    FullyQualifiedName fqn = new FullyQualifiedName("java.lang.Object");
+    FullyQualifiedName fqn = FullyQualifiedName.parse("java.lang.Object");
     assertEquals("Name", "Object", fqn.getSimpleName());
     assertEquals("Namespace", "java.lang", fqn.getNamespace().get().toString());
   }
 
   @Test
   public void shouldNotHaveNamespaceForPrimitiveTypes() {
-    FullyQualifiedName fqn = new FullyQualifiedName(INT);
+    FullyQualifiedName fqn = FullyQualifiedName.parse(INT);
     assertEquals("Name", INT, fqn.getSimpleName());
     assertFalse("Should not have namespace", fqn.getNamespace().isPresent());
   }
 
   @Test
   public void shouldCombineNamespaceAndName() {
-    assertEquals("java.lang.String", new FullyQualifiedName(new FullyQualifiedName("java.lang"), "String").toString());
-    assertEquals(INT, new FullyQualifiedName(Optional.empty(), INT).toString());
+    assertEquals("java.lang.String", new FullyQualifiedName(
+        FullyQualifiedName.parse("java.lang"), new Identifier("String")).toString());
+    assertEquals(INT, new FullyQualifiedName(Optional.empty(), new Identifier(INT)).toString());
   }
 
 }
