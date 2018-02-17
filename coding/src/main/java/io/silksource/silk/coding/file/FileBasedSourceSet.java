@@ -21,11 +21,11 @@ import io.silksource.silk.coding.event.TypeAddedEvent;
 
 public class FileBasedSourceSet implements SourceSet {
 
-  private final String name;
+  private final Identifier name;
   private final List<Type> types = new ArrayList<>();
   private final Project project;
 
-  public FileBasedSourceSet(Project project, String name) {
+  public FileBasedSourceSet(Project project, Identifier name) {
     this.project = project;
     this.name = name;
     File dir = getSourcePath().toFile();
@@ -60,7 +60,7 @@ public class FileBasedSourceSet implements SourceSet {
   }
 
   @Override
-  public String getName() {
+  public Identifier getName() {
     return name;
   }
 

@@ -17,9 +17,10 @@ import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 
 import io.silksource.silk.coding.api.CompilationFailedException;
 import io.silksource.silk.coding.api.Events;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.coding.api.SourceSetNames;
+import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.SourceSynchronizationException;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.environment.Environment;
@@ -47,8 +48,8 @@ public class FileBasedProject implements Project {
     this.events = new Events();
     events.listenFor(TypeChangedEvent.class, this::typeChanged);
     this.sourceSets = new ArrayList<>();
-    addSourceSet(SourceSetNames.MAIN.toString());
-    addSourceSet(SourceSetNames.TEST.toString());
+    addSourceSet(SourceSetName.MAIN.id());
+    addSourceSet(SourceSetName.TEST.id());
   }
 
   private void typeChanged(TypeChangedEvent event) {
@@ -91,7 +92,7 @@ public class FileBasedProject implements Project {
   }
 
   @Override
-  public final SourceSet addSourceSet(String name) {
+  public final SourceSet addSourceSet(Identifier name) {
     SourceSet result = new FileBasedSourceSet(this, name);
     sourceSets.add(result);
     return result;

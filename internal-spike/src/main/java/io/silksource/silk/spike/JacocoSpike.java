@@ -20,6 +20,7 @@ import org.jacoco.core.runtime.SystemPropertiesRuntime;
 import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
+import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.auto.CodeHealer;
 import io.silksource.silk.coding.auto.syntax.CreateMissingClassUnderTest;
@@ -42,7 +43,7 @@ public class JacocoSpike {
 
   private void run() throws Exception {
     Project project = new FileBasedProject(File.createTempFile("project-", "-spike"));
-    SourceSet sourceSet = new FileBasedSourceSet(project, "main");
+    SourceSet sourceSet = new FileBasedSourceSet(project, SourceSetName.MAIN.id());
     Type type = new FileBasedType(sourceSet, FullyQualifiedName.parse(
         CreateMissingClassUnderTest.class.getName()));
     String targetClassName = type.getName().toString();

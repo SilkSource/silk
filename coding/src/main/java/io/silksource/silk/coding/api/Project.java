@@ -19,7 +19,7 @@ public interface Project extends FileBased {
    * @param name The name of the source set
    * @return the added source set
    */
-  SourceSet addSourceSet(String name);
+  SourceSet addSourceSet(Identifier name);
 
   /**
    * Returns the source sets in the project.
@@ -32,23 +32,23 @@ public interface Project extends FileBased {
    * @param name the name of the source set to return
    * @return an optional source set
    */
-  default Optional<SourceSet> sourceSet(String name) {
+  default Optional<SourceSet> sourceSet(Identifier name) {
     return getSourceSets().stream()
         .filter(s -> s.getName().equals(name))
         .findAny();
   }
 
   default SourceSet mainSources() {
-    return namedSourceSet(SourceSetNames.MAIN);
+    return namedSourceSet(SourceSetName.MAIN);
   }
 
-  default SourceSet namedSourceSet(SourceSetNames name) {
-    return sourceSet(name.toString())
-        .orElseThrow(() -> new IllegalStateException("Missing " + name + " sources"));
+  default SourceSet namedSourceSet(SourceSetName sourceSetName) {
+    return sourceSet(sourceSetName.id())
+        .orElseThrow(() -> new IllegalStateException("Missing " + sourceSetName + " sources"));
   }
 
   default SourceSet testSources() {
-    return namedSourceSet(SourceSetNames.TEST);
+    return namedSourceSet(SourceSetName.TEST);
   }
 
   /**

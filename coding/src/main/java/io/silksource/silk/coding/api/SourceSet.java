@@ -17,7 +17,7 @@ public interface SourceSet extends FileBased {
    * Returns the name of the source set.
    * @return the name of the source set
    */
-  String getName();
+  Identifier getName();
 
   @Override
   default Path getSourcePath() {
@@ -26,7 +26,7 @@ public interface SourceSet extends FileBased {
 
   @Override
   default Path getCompiledPath() {
-    return getProject().getCompiledPath().resolve(getName());
+    return getProject().getCompiledPath().resolve(getName().toString());
   }
 
   /**

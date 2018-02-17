@@ -10,7 +10,7 @@ import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Field;
 import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.coding.api.SourceSetNames;
+import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.auto.CodeHealer;
 import io.silksource.silk.coding.event.FieldAddedEvent;
@@ -36,7 +36,7 @@ public class CreateMissingClassUnderTest implements CodeHealer {
   }
 
   private Optional<SourceSet> mainSourceSet(Type ownerType) {
-    return ownerType.getProject().sourceSet(SourceSetNames.MAIN.toString());
+    return ownerType.getProject().sourceSet(SourceSetName.MAIN.id());
   }
 
   private boolean isReferenceToClassUnderTest(Type ownerType, FullyQualifiedName fieldType) {
