@@ -39,7 +39,7 @@ public class JUnitSpike {
   }
 
   private void discoverTests() {
-    File classesDir = new File("classes").getAbsoluteFile();
+    File classesDir = new File("classes/main").getAbsoluteFile(); // Only works from within Eclipse
     Set<Path> classpathRoots = Collections.singleton(classesDir.toPath());
     TestPlan testPlan = launcher.discover(LauncherDiscoveryRequestBuilder.request()
         .selectors(DiscoverySelectors.selectClasspathRoots(classpathRoots))
@@ -66,15 +66,17 @@ public class JUnitSpike {
     if (id.getSource().isPresent()) {
       TestSource source = id.getSource().get();
       if (source instanceof MethodSource) {
-        MethodSource method = id.getSource().map(MethodSource.class::cast).get();
-        ClassSource parent = testIds.stream()
+        String methodName = ((MethodSource)source).getMethodName();
+        String className = testIds.stream()
             .filter(testId -> testId.getUniqueId().equals(id.getParentId().get()))
             .map(TestIdentifier::getSource)
             .map(Optional::get)
             .map(ClassSource.class::cast)
             .findFirst()
-            .get();
-        return String.format("%s#%s", parent.getClassName(), method.getMethodName());
+            .map(ClassSource::getClassName)
+            .orElseThrow(() ->
+                new IllegalStateException("No ClassSource found as parent of MethodSource"));
+        return String.format("%s#%s", className, methodName);
       }
     }
     return id.getDisplayName();
@@ -82,7 +84,7 @@ public class JUnitSpike {
 
   @SuppressWarnings("PMD.SystemPrintln")
   private void print(TestIdentifier id, TestExecutionResult result) {
-    System.out.println(String.format("%s%n  => %s", getMethod(id), result.getStatus()));
+    System.out.println(String.format("%s%n=> %s", getMethod(id), result.getStatus()));
   }
 
 }
