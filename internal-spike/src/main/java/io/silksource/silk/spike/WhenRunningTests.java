@@ -11,8 +11,9 @@ import org.junit.Test;
 public class WhenRunningTests {
 
   @Test
+  @SuppressWarnings("PMD.UnnecessaryBooleanAssertion")
   public void shouldDiscoverAndRunJUnitTests() {
-    assertTrue(true);
+    assertTrue("Dummy test just to see if it can be discovered and run", true);
   }
 
 }
