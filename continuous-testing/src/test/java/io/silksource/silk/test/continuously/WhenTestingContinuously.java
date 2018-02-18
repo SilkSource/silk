@@ -21,6 +21,7 @@ import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.testdata.ProjectBuilder;
 import io.silksource.silk.testing.TestRunner;
+import io.silksource.silk.testing.continuous.ContinuousTester;
 
 
 public class WhenTestingContinuously {
