@@ -8,14 +8,19 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
+import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.testdata.FullyQualifiedNameBuilder;
+import io.silksource.silk.testdata.IdentifierBuilder;
+import io.silksource.silk.testdata.ProjectBuilder;
 
 
 public class WhenWritingCodeOnTheFileSystem {
@@ -23,13 +28,18 @@ public class WhenWritingCodeOnTheFileSystem {
   @Rule
   public TemporaryFolder temporaryFolder = new TemporaryFolder();
   private final FullyQualifiedName typeName = FullyQualifiedNameBuilder.someFullyQualifiedName();
+  private File projectDir;
+
+  @Before
+  public void init() {
+    projectDir = new File(temporaryFolder.getRoot(), "project");
+  }
 
   @Test
   public void shouldCreateDirectoriesAndFilesIfTheyDontExist() {
-    File projectDir = new File(temporaryFolder.getRoot(), "project");
-
     Project project = new FileBasedProject(projectDir);
     assertTrue("Project dir not created", projectDir.isDirectory());
+
     File mainSourceDir = new File(projectDir, "src/main/java");
     assertTrue("Source dir not created", mainSourceDir.isDirectory());
     assertTrue("Test dir not created", new File(projectDir, "src/test/java").isDirectory());
@@ -42,13 +52,19 @@ public class WhenWritingCodeOnTheFileSystem {
 
   @Test
   public void shouldLoadFromExistingDirectoriesAndFiles() {
-    File projectDir = new File(".").getAbsoluteFile();
+    Identifier methodName = IdentifierBuilder.someIdentifier();
+    Project project = ProjectBuilder.inDirectory(projectDir)
+        .withTestType(typeName)
+            .withTestMethod(methodName)
+            .end()
+        .end()
+    .build();
 
-    Project project = new FileBasedProject(projectDir);
+    Optional<Type> type = project.testSources().type(typeName);
+    assertTrue("Type not loaded", type.isPresent());
 
-    Optional<Type> thisType = project.testSources()
-        .type(FullyQualifiedName.parse(getClass().getName()));
-    assertTrue("Type not loaded", thisType.isPresent());
+    Optional<Method> method = type.get().method(methodName);
+    assertTrue("Method not loaded", method.isPresent());
   }
 
 

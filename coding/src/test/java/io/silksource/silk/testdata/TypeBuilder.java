@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
 
@@ -32,11 +33,15 @@ public class TypeBuilder {
     return parent;
   }
 
+  public MethodBuilder withTestMethod(Identifier testMethodName) {
+    return withTestMethod(testMethodName.toString());
+  }
+
   public MethodBuilder withTestMethod(String testMethodName) {
     return new MethodBuilder(this, testMethodName).withAnnotation("org.junit.Test");
   }
 
-  public void addMethod(String method) {
+  void addMethod(String method) {
     methods.add(method);
   }
 
