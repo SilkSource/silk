@@ -19,7 +19,7 @@ import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
-import io.silksource.silk.coding.auto.registry.AllHealers;
+import io.silksource.silk.coding.auto.CodeHealers;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.TypeAddedEvent;
 
@@ -34,7 +34,7 @@ public abstract class WhenManipulatingCode {
   @Before
   public void init() {
     project = newProject();
-    AllHealers.installIn(project);
+    CodeHealers.installIn(project);
     project.getEvents().listenFor(Object.class, e -> firedEvents.add(e));
   }
 

@@ -18,11 +18,11 @@ import org.jacoco.core.runtime.RuntimeData;
 import org.jacoco.core.runtime.SystemPropertiesRuntime;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Plugin;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.Type;
-import io.silksource.silk.coding.auto.CodeHealer;
 import io.silksource.silk.coding.auto.syntax.CreateMissingClassUnderTest;
 import io.silksource.silk.coding.event.TypeAddedEvent;
 import io.silksource.silk.coding.file.FileBasedProject;
@@ -59,7 +59,7 @@ public class JacocoSpike {
       memoryClassLoader.addDefinition(targetClassName, instrumented);
       targetClass = memoryClassLoader.loadClass(targetClassName);
     }
-    CodeHealer codeHealer = (CodeHealer)targetClass.newInstance();
+    Plugin codeHealer = (Plugin)targetClass.newInstance();
     codeHealer.listenFor(project.getEvents());
     project.getEvents().fire(new TypeAddedEvent(type));
 

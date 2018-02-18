@@ -9,17 +9,17 @@ import java.util.Optional;
 import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Field;
 import io.silksource.silk.coding.api.FullyQualifiedName;
+import io.silksource.silk.coding.api.Plugin;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.Type;
-import io.silksource.silk.coding.auto.CodeHealer;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 
 
 /**
  * Syntactic healer that creates a class that is used but not present.
  */
-public class CreateMissingClassUnderTest implements CodeHealer {
+public class CreateMissingClassUnderTest implements Plugin {
 
   @Override
   public void listenFor(Events events) {
