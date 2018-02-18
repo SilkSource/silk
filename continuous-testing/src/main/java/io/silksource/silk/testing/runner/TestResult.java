@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.testing;
+package io.silksource.silk.testing.runner;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.test;
+package io.silksource.silk.testing.impact;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,8 +13,6 @@ import java.util.TreeSet;
 import org.junit.Test;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
-import io.silksource.silk.testing.continuous.InMemoryTestImpactMap;
-import io.silksource.silk.testing.continuous.TestImpactMap;
 
 
 public class WhenAnalyzingTheImpactOfTests {

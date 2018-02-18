@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.testing.junit;
+package io.silksource.silk.testing.runner.junit;
 
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 
 import io.silksource.silk.coding.api.Method;
-import io.silksource.silk.testing.TestListener;
-import io.silksource.silk.testing.TestResult;
-import io.silksource.silk.testing.TestResult.Status;
+import io.silksource.silk.testing.runner.TestListener;
+import io.silksource.silk.testing.runner.TestResult;
+import io.silksource.silk.testing.runner.TestResult.Status;
 
 
 class TestExecutionListenerAdapter implements TestExecutionListener {

@@ -25,6 +25,7 @@ import io.silksource.silk.coding.api.SourceSynchronizationException;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.environment.Environment;
 import io.silksource.silk.coding.environment.EnvironmentFactory;
+import io.silksource.silk.coding.event.TypeBasedEvent;
 import io.silksource.silk.coding.event.TypeChangedEvent;
 import io.silksource.silk.coding.event.TypeCompiledEvent;
 
@@ -52,7 +53,7 @@ public class FileBasedProject implements Project {
     addSourceSet(SourceSetName.TEST.id());
   }
 
-  private void typeChanged(TypeChangedEvent event) {
+  private void typeChanged(TypeBasedEvent event) {
     compile(event.getType());
   }
 

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.test.runner;
+package io.silksource.silk.testing.runner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.Optional;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,20 +27,22 @@ import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.file.FileBasedProject;
-import io.silksource.silk.testing.TestListener;
-import io.silksource.silk.testing.TestResult;
-import io.silksource.silk.testing.TestResult.Status;
-import io.silksource.silk.testing.TestRunner;
-import io.silksource.silk.testing.junit.JUnitTestRunner;
 
 
-public class WhenTestingUsingJUnit {
+public abstract class WhenRunningTests {
 
   @Rule
   public TestName testName = new TestName();
-  private final TestRunner testRunner = new JUnitTestRunner();
   private final Project project = new FileBasedProject(new File("."));
   private final FullyQualifiedName className = FullyQualifiedName.parse(getClass().getName());
+  private TestRunner testRunner;
+
+  @Before
+  public void init() {
+    testRunner = newTestRunner();
+  }
+
+  protected abstract TestRunner newTestRunner();
 
   @Test
   public void shouldDiscoverTests() {
@@ -68,7 +71,7 @@ public class WhenTestingUsingJUnit {
     verify(listener).finish(eq(className), eq(testMethod.getName()),
         resultCaptor.capture());
     TestResult result = resultCaptor.getValue();
-    assertEquals("Status", Status.PASSED, result.getStatus());
+    assertEquals("Status", TestResult.Status.PASSED, result.getStatus());
     assertFalse("Exception", result.getException().isPresent());
   }
 
@@ -78,7 +81,7 @@ public class WhenTestingUsingJUnit {
     Type testType = type.get();
 
     Optional<Method> method = testType.method(new Identifier(name));
-    assertTrue("Missing method", type.isPresent());
+    assertTrue(String.format("Missing method %s in type %s", name, className), method.isPresent());
 
     return method.get();
   }
@@ -86,7 +89,7 @@ public class WhenTestingUsingJUnit {
   @Ignore("Referenced in test that verifies test methods can be skipped")
   @Test
   public void skipped() {
-    // Never called
+    assertEquals(2L, 1 + 1);
   }
 
   @Test

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.testing.junit;
+package io.silksource.silk.testing.runner.junit;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -25,8 +25,8 @@ import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Method;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.api.SourceSet;
-import io.silksource.silk.testing.TestListener;
-import io.silksource.silk.testing.TestRunner;
+import io.silksource.silk.testing.runner.TestListener;
+import io.silksource.silk.testing.runner.TestRunner;
 
 
 public class JUnitTestRunner implements TestRunner {

@@ -10,9 +10,10 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.objectweb.asm.ClassReader;
@@ -26,8 +27,10 @@ import io.silksource.silk.coding.api.SourceSynchronizationException;
 import io.silksource.silk.coding.api.Type;
 import io.silksource.silk.coding.event.FieldAddedEvent;
 import io.silksource.silk.coding.event.MethodAddedEvent;
+import io.silksource.silk.coding.event.TypeBasedEvent;
 import io.silksource.silk.coding.event.TypeChangedEvent;
 import io.silksource.silk.coding.event.TypeCompiledEvent;
+import io.silksource.silk.coding.event.TypeLoadedEvent;
 import io.silksource.silk.coding.impl.DefaultField;
 import io.silksource.silk.coding.impl.DefaultMethod;
 
@@ -35,10 +38,13 @@ import io.silksource.silk.coding.impl.DefaultMethod;
 public class FileBasedType implements Type {
 
   private static final String NL = System.lineSeparator();
+
   private final SourceSet sourceSet;
   private final FullyQualifiedName name;
-  private final List<Field> fields = new ArrayList<>();
-  private final List<Method> methods = new ArrayList<>();
+  private FullyQualifiedName superType;
+  private final Collection<FullyQualifiedName> implementedInterfaces = new LinkedHashSet<>();
+  private final Collection<Field> fields = new LinkedHashSet<>();
+  private final Collection<Method> methods = new LinkedHashSet<>();
   private boolean loading;
 
   public FileBasedType(SourceSet sourceSet, FullyQualifiedName name) {
@@ -64,6 +70,7 @@ public class FileBasedType implements Type {
     } finally {
       loading = false;
     }
+    changed(new TypeLoadedEvent(this));
   }
 
   private void load() {
@@ -82,7 +89,7 @@ public class FileBasedType implements Type {
     changed(new TypeChangedEvent(this));
   }
 
-  private void changed(TypeChangedEvent event) {
+  private void changed(TypeBasedEvent event) {
     if (!loading) {
       getEvents().fire(event);
     }
@@ -115,13 +122,34 @@ public class FileBasedType implements Type {
   }
 
   @Override
+  public SourceSet getSourceSet() {
+    return sourceSet;
+  }
+
+  @Override
   public FullyQualifiedName getName() {
     return name;
   }
 
   @Override
-  public SourceSet getSourceSet() {
-    return sourceSet;
+  public FullyQualifiedName getSuperType() {
+    return superType;
+  }
+
+  @Override
+  public void setSuperType(FullyQualifiedName superType) {
+    this.superType = Objects.requireNonNull(superType, "Missing super type");
+  }
+
+  @Override
+  public Collection<FullyQualifiedName> getImplementedInterfaces() {
+    return Collections.unmodifiableCollection(implementedInterfaces);
+  }
+
+  @Override
+  public void setImplementedInterfaces(Collection<FullyQualifiedName> implementedInterfaces) {
+    this.implementedInterfaces.clear();
+    this.implementedInterfaces.addAll(Objects.requireNonNull(implementedInterfaces, "Missing interfaces"));
   }
 
   @Override
@@ -133,8 +161,8 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public List<Field> getFields() {
-    return Collections.unmodifiableList(fields);
+  public Collection<Field> getFields() {
+    return Collections.unmodifiableCollection(fields);
   }
 
   @Override
@@ -146,8 +174,8 @@ public class FileBasedType implements Type {
   }
 
   @Override
-  public List<Method> getMethods() {
-    return Collections.unmodifiableList(methods);
+  public Collection<Method> getMethods() {
+    return Collections.unmodifiableCollection(methods);
   }
 
   @Override

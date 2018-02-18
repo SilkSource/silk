@@ -21,4 +21,9 @@ public class WhenRunningInEclipse extends AbstractEnvironmentTestCase {
     return "classes";
   }
 
+  @Override
+  protected String expectedScratchDir() {
+    return ".settings";
+  }
+
 }

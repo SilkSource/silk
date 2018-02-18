@@ -5,7 +5,8 @@ package io.silksource.silk.coding.api;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 
 
@@ -53,6 +54,42 @@ public interface Type extends FileBased {
   }
 
   /**
+   * Returns the type from which this type is derived.
+   * @return the type from which this type is derived
+   */
+  FullyQualifiedName getSuperType();
+
+  /**
+   * Sets the type from which this type is derived.
+   * @param superType the type from which this type is derived
+   */
+  void setSuperType(FullyQualifiedName superType);
+
+  /**
+   * Returns the interfaces that this type implements, if any.
+   * @return the interfaces that this type implements, if any
+   */
+  Collection<FullyQualifiedName> getImplementedInterfaces();
+
+  /**
+   * Set the interfaces that this type implements.
+   * @param implementedInterfaces the interfaces that this type implements
+   */
+  void setImplementedInterfaces(Collection<FullyQualifiedName> implementedInterfaces);
+
+  /**
+   * Returns the direct ancestors of this type. These are the {@linkplain #getSuperType() super type} and the
+   * {@linkplain #getImplementedInterfaces() implemented interfaces}.
+   * @return the direct ancestors of this type
+   */
+  default Collection<FullyQualifiedName> directAncestors() {
+    Collection<FullyQualifiedName> result = new LinkedHashSet<>();
+    result.add(getSuperType());
+    getImplementedInterfaces().forEach(result::add);
+    return result;
+  }
+
+  /**
    * Add a field to this type.
    * @param name the name of the field to add
    * @param type the type of the field to add
@@ -64,7 +101,7 @@ public interface Type extends FileBased {
    * Returns all the fields in this type.
    * @return all the fields in this type
    */
-  List<Field> getFields();
+  Collection<Field> getFields();
 
   /**
    * Returns the field with the given name.
@@ -88,7 +125,7 @@ public interface Type extends FileBased {
    * Returns all the methods in this type.
    * @return all the methods in this type
    */
-  List<Method> getMethods();
+  Collection<Method> getMethods();
 
   /**
    * Returns the method with the given name.

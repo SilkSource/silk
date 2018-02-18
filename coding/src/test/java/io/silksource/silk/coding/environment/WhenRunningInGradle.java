@@ -21,4 +21,9 @@ public class WhenRunningInGradle extends AbstractEnvironmentTestCase {
     return "build/classes/java";
   }
 
+  @Override
+  protected String expectedScratchDir() {
+    return "build";
+  }
+
 }

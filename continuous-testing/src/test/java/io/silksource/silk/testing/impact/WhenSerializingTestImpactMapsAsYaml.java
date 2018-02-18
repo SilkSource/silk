@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 SilkSource.
  */
-package io.silksource.silk.test;
+package io.silksource.silk.testing.impact;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -27,8 +27,6 @@ import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import io.silksource.silk.coding.api.FullyQualifiedName;
-import io.silksource.silk.testing.continuous.SerializeTestImpactMapToYaml;
-import io.silksource.silk.testing.continuous.TestImpactMap;
 
 
 @SuppressWarnings("unchecked")

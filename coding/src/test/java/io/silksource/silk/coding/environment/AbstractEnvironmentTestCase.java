@@ -19,6 +19,8 @@ public abstract class AbstractEnvironmentTestCase {
 
   protected abstract String expectedCompiledDir();
 
+  protected abstract String expectedScratchDir();
+
 
   @Before
   public void init() {
@@ -31,8 +33,13 @@ public abstract class AbstractEnvironmentTestCase {
   }
 
   @Test
-  public void shouldReturnLocationOfCOmpiledSources() {
+  public void shouldReturnLocationOfCompiledSources() {
     assertEquals("Compiled dir", expectedCompiledDir(), environment.getCompiledDir());
+  }
+
+  @Test
+  public void shouldReturnLocationOfScratchSpace() {
+    assertEquals("Scratch dir", expectedScratchDir(), environment.getScratchDir());
   }
 
 }

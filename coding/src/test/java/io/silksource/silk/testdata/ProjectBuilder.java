@@ -5,6 +5,7 @@ package io.silksource.silk.testdata;
 
 import java.io.File;
 
+import io.silksource.silk.coding.api.FullyQualifiedName;
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.file.FileBasedProject;
 
@@ -23,6 +24,10 @@ public class ProjectBuilder {
 
   public Project build() {
     return project;
+  }
+
+  public TypeBuilder withTestType(FullyQualifiedName fqn) {
+    return withTestType(fqn.toString());
   }
 
   public TypeBuilder withTestType(String fqn) {

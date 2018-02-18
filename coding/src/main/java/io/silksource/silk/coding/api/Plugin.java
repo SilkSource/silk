@@ -3,6 +3,7 @@
  */
 package io.silksource.silk.coding.api;
 
+
 /**
  * Extend the functionality of a project.
  */
@@ -17,6 +18,8 @@ public interface Plugin {
     // Optional functionality
   }
 
-  void listenFor(Events events);
+  default void listenFor(Events events) {
+    // Optional functionality
+  }
 
 }

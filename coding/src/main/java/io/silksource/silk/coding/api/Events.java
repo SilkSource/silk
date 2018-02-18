@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 
 /**
@@ -43,6 +44,7 @@ public class Events {
         .filter(e -> e.getKey().isAssignableFrom(event.getClass()))
         .map(Entry::getValue)
         .flatMap(Collection::stream)
+        .collect(Collectors.toList())
         .forEach(c -> ((Consumer<T>)c).accept(event));
   }
 
