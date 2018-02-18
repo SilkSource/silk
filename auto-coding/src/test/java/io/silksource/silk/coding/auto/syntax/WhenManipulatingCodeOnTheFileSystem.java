@@ -3,8 +3,8 @@
  */
 package io.silksource.silk.coding.auto.syntax;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
 import io.silksource.silk.coding.api.Project;
 import io.silksource.silk.coding.file.FileBasedProject;
@@ -12,13 +12,12 @@ import io.silksource.silk.coding.file.FileBasedProject;
 
 public class WhenManipulatingCodeOnTheFileSystem extends WhenManipulatingCode {
 
+  @Rule
+  public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
   @Override
   protected Project newProject() {
-    try {
-      return new FileBasedProject(Files.createTempDirectory("project").toFile());
-    } catch (IOException e) {
-      throw new IllegalStateException("Failed to create project directory", e);
-    }
+    return new FileBasedProject(temporaryFolder.getRoot());
   }
 
 }

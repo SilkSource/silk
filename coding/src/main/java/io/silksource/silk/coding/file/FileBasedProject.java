@@ -65,11 +65,18 @@ public class FileBasedProject implements Project {
   private void compile(Path source, Path destination) {
     StringWriter output = new StringWriter();
     try (PrintWriter writer = new PrintWriter(output)) {
-      String commandLine = String.format("-source 1.8 %s -d %s", source, destination);
+      String commandLine = getCommandLine(source, destination);
       if (!BatchCompiler.compile(commandLine, writer, writer, null)) {
         throw new CompilationFailedException(commandLine, output.toString());
       }
     }
+  }
+
+  private String getCommandLine(Path source, Path destination) {
+    StringBuilder result = new StringBuilder();
+    result.append("-source 1.8 ").append(source);
+    result.append(" -d ").append(destination);
+    return result.toString();
   }
 
   @Override
