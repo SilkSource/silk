@@ -12,6 +12,7 @@ import java.nio.file.StandardOpenOption;
 
 import io.silksource.silk.coding.api.Plugin;
 import io.silksource.silk.coding.api.Project;
+import io.silksource.silk.coding.api.Settings;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.Type;
 
@@ -26,6 +27,7 @@ public abstract class CodeInstrumenter implements Plugin {
   @Override
   public void init(Project project) {
     Path projectOutputPath = project.getScrathPath().resolve(BASE_DIR);
+    project.getSettings().set(Settings.COMPILED_TESTS_PATH, projectOutputPath);
     project.getSourceSets().forEach(sourceSet ->
         instrument(sourceSet, projectOutputPath));
   }

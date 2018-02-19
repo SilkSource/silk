@@ -71,4 +71,10 @@ public interface Project extends FileBased {
    */
   Path getScrathPath();
 
+  /**
+   * Returns the project's settings.
+   * @return the project's settings
+   */
+  Settings getSettings();
+
 }

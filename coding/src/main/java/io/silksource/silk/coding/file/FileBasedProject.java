@@ -19,6 +19,7 @@ import io.silksource.silk.coding.api.CompilationFailedException;
 import io.silksource.silk.coding.api.Events;
 import io.silksource.silk.coding.api.Identifier;
 import io.silksource.silk.coding.api.Project;
+import io.silksource.silk.coding.api.Settings;
 import io.silksource.silk.coding.api.SourceSet;
 import io.silksource.silk.coding.api.SourceSetName;
 import io.silksource.silk.coding.api.SourceSynchronizationException;
@@ -28,6 +29,7 @@ import io.silksource.silk.coding.environment.EnvironmentFactory;
 import io.silksource.silk.coding.event.TypeBasedEvent;
 import io.silksource.silk.coding.event.TypeChangedEvent;
 import io.silksource.silk.coding.event.TypeCompiledEvent;
+import io.silksource.silk.coding.impl.DefaultSettings;
 
 
 public class FileBasedProject implements Project {
@@ -36,6 +38,7 @@ public class FileBasedProject implements Project {
   private final Events events;
   private final Path root;
   private final Environment environment;
+  private final Settings settings;
 
   public FileBasedProject(File dir) {
     try {
@@ -51,6 +54,8 @@ public class FileBasedProject implements Project {
     this.sourceSets = new ArrayList<>();
     addSourceSet(SourceSetName.MAIN.id());
     addSourceSet(SourceSetName.TEST.id());
+    this.settings = new DefaultSettings();
+    settings.set(Settings.COMPILED_TESTS_PATH, testSources().getCompiledPath());
   }
 
   private void typeChanged(TypeBasedEvent event) {
@@ -97,6 +102,11 @@ public class FileBasedProject implements Project {
   @Override
   public Events getEvents() {
     return events;
+  }
+
+  @Override
+  public Settings getSettings() {
+    return settings;
   }
 
   @Override
