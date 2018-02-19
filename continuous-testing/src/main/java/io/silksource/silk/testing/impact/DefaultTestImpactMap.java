@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import io.silksource.silk.coding.api.FullyQualifiedName;
 
 
-public class InMemoryTestImpactMap implements TestImpactMap {
+public class DefaultTestImpactMap implements TestImpactMap {
 
   private final Map<FullyQualifiedName, SortedSet<FullyQualifiedName>> testsBySourcesTheyTouch
       = new HashMap<>();

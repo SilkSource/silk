@@ -17,7 +17,7 @@ import io.silksource.silk.coding.api.FullyQualifiedName;
 
 public class WhenAnalyzingTheImpactOfTests {
 
-  private final TestImpactMap testImpactMap = new InMemoryTestImpactMap();
+  private final TestImpactMap testImpactMap = new DefaultTestImpactMap();
 
   @Test
   public void shouldRegisterWhichTestsTouchAGivenSource() {
