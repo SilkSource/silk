@@ -33,12 +33,12 @@ public class TypeBuilder {
     return parent;
   }
 
-  public MethodBuilder withMethod(Identifier name) {
-    return withMethod(name.toString());
+  public MethodBuilder withMethod(Identifier methodName) {
+    return withMethod(methodName.toString());
   }
 
-  public MethodBuilder withMethod(String name) {
-    return new MethodBuilder(this, name);
+  public MethodBuilder withMethod(String methodName) {
+    return new MethodBuilder(this, methodName);
   }
 
   public MethodBuilder withTestMethod(Identifier testMethodName) {
