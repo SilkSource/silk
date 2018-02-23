@@ -3,8 +3,8 @@
  */
 package io.silksource.silk.spike;
 
-import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import org.jacoco.core.analysis.Analyzer;
 import org.jacoco.core.analysis.CoverageBuilder;
@@ -42,7 +42,8 @@ public class JacocoSpike {
   }
 
   private void run() throws Exception {
-    Project project = new FileBasedProject(File.createTempFile("project-", "-spike"));
+    System.setProperty("sun.java.command", "eclipse");
+    Project project = new FileBasedProject(Files.createTempDirectory("project-spike-").toFile());
     SourceSet sourceSet = new FileBasedSourceSet(project, SourceSetName.MAIN.id());
     Type type = new FileBasedType(sourceSet, FullyQualifiedName.parse(
         CreateMissingClassUnderTest.class.getName()));
