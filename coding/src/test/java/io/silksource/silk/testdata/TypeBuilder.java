@@ -33,12 +33,20 @@ public class TypeBuilder {
     return parent;
   }
 
+  public MethodBuilder withMethod(Identifier name) {
+    return withMethod(name.toString());
+  }
+
+  public MethodBuilder withMethod(String name) {
+    return new MethodBuilder(this, name);
+  }
+
   public MethodBuilder withTestMethod(Identifier testMethodName) {
     return withTestMethod(testMethodName.toString());
   }
 
   public MethodBuilder withTestMethod(String testMethodName) {
-    return new MethodBuilder(this, testMethodName).withAnnotation("org.junit.Test");
+    return withMethod(testMethodName).withAnnotation("org.junit.Test");
   }
 
   void addMethod(String method) {

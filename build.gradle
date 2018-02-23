@@ -62,7 +62,8 @@ subprojects {
     asm "org.ow2.asm:asm:$asmVersion"
     commonsIo "commons-io:commons-io:$commonsIoVersion"
     ecj "org.eclipse.jdt:ecj:$ecjVersion"
-    jaCoCo "org.jacoco:org.jacoco.core:$jacocoVersion"
+    jaCoCo "org.jacoco:org.jacoco.core:$jacocoVersion",
+        "org.jacoco:org.jacoco.agent:$jacocoVersion"
     junit "org.junit.platform:junit-platform-launcher:$junit5Version",
         "org.junit.vintage:junit-vintage-engine:$junit4Version"
     mockito "org.mockito:mockito-core:$mockitoVersion"
