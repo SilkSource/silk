@@ -76,6 +76,7 @@
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,net,org,com,io"/>
       <property name="separated" value="true"/>
+      <property name="sortStaticImportsAlphabetically" value="true"/>
     </module>
     <module name="RedundantImport"/>
 

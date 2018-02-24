@@ -3,9 +3,8 @@
  */
 package io.silksource.silk.testing.impact;
 
-import static org.junit.Assert.assertEquals;
-
 import static io.silksource.silk.testdata.FullyQualifiedNameBuilder.someFullyQualifiedName;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.TreeSet;
